@@ -1,0 +1,52 @@
+{
+  "ramas": [
+    {
+      "id": "id_alitas",
+      "name": "Alitas",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_manada",
+      "name": "Manada",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_caravana",
+      "name": "Caravana",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_unidad",
+      "name": "Unidad",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_solar",
+      "name": "Solar",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_caminantes",
+      "name": "Caminantes",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_clan",
+      "name": "Clan",
+      "img": "",
+      "songs": []
+    },
+    {
+      "id": "id_rovers",
+      "name": "Rovers",
+      "img": "",
+      "songs": []
+    }
+  ]
+}
