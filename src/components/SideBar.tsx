@@ -48,7 +48,7 @@ export function SideBar() {
     <aside
       className={`  h-full max-lg:absolute max-lg:z-10 max-lg:bg-background max-lg:border  relative   transition-all duration-300${
         sideBarStatus
-          ? "translate-x-[0% w-[13%] max-lg:w-[30%]"
+          ? "translate-x-[0% w-[13%] max-lg:w-[30%] max-sm:w-[50%]"
           : "translate-x-[-1500%] w-0 max-lg:w-0 "
       }`}
     >
