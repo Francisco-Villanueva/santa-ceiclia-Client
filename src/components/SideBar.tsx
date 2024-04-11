@@ -46,10 +46,10 @@ export function SideBar() {
   const { sideBarStatus, togglesideBarStatus } = songStore();
   return (
     <aside
-      className={`w-[13%]   h-full max-lg:absolute max-lg:z-10 max-lg:bg-background max-lg:border max-lg:w-[30%] relative   transition-all duration-300${
+      className={`  h-full max-lg:absolute max-lg:z-10 max-lg:bg-background max-lg:border  relative   transition-all duration-300${
         sideBarStatus
-          ? "translate-x-[0%] "
-          : "translate-x-[-1500%] w-[0] max-lg:w-0 "
+          ? "translate-x-[0% w-[13%] max-lg:w-[30%]"
+          : "translate-x-[-1500%] w-0 max-lg:w-0 "
       }`}
     >
       <button
