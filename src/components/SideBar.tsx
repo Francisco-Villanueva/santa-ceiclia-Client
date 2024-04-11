@@ -8,6 +8,7 @@ import {
   SongsIcon,
 } from "@/icons";
 import { songStore } from "@/store";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { ReactNode, useState } from "react";
@@ -42,6 +43,7 @@ const sidebarItems: { title: string; items?: ISubItems[] }[] = [
 ];
 
 export function SideBar() {
+  const { theme } = useTheme();
   const router = useRouter();
   const { sideBarStatus, togglesideBarStatus } = songStore();
   return (
@@ -65,7 +67,7 @@ export function SideBar() {
       >
         <div className="relative w-24 h-24 drop-shadow-xl  ">
           <Image
-            src={"/pelicano-white.png"}
+            src={`/pelicano-${theme === "light" ? "dark" : "white"}.png`}
             alt="pelicano alegre "
             className="stroke-black drop-shadow-2xl"
             fill
