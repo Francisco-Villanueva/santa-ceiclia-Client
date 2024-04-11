@@ -3,7 +3,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 
 export default function SoundPlayer() {
-  const { isPlaying, songPlaying } = songStore();
+  const { isPlaying, songPlaying, nextSong } = songStore();
 
   return (
     <ReactPlayer
@@ -12,6 +12,7 @@ export default function SoundPlayer() {
       playing={isPlaying}
       width="0"
       height="0"
+      onEnded={nextSong}
     />
   );
 }

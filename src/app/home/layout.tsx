@@ -3,7 +3,7 @@ import { ThemeModeToggle } from "@/components/theme";
 import { Toaster } from "@/components/ui/toaster";
 import React, { ReactNode } from "react";
 import Provider from "./Provider";
-import { Reproductor } from "@/components/soundPlayer";
+import { QueueList, Reproductor } from "@/components/soundPlayer";
 interface RootLayoutProps {
   children: ReactNode;
 }
@@ -18,7 +18,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <section className="  h-[10%] ">
                 <div className="  h-full p-4 flex items-center justify-between ">
                   <SearchInput />
-                  <ThemeModeToggle />
+                  <div className="flex items-center gap-2">
+                    <QueueList />
+                    <ThemeModeToggle />
+                  </div>
                 </div>
               </section>
               <div className="h-[90%] overflow-auto p-4">{children}</div>

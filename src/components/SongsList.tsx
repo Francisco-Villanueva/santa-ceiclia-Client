@@ -1,13 +1,26 @@
 import PlayButton from "@/common/buttons/PlayButton";
-import { songs } from "@/mocks/songs.json";
+import { PlaylistIcon } from "@/icons";
+import { songs as ALLSONGS } from "@/mocks/songs.json";
 import { songStore } from "@/store";
+import { SongType } from "@/types";
 import Image from "next/image";
+import { useToast } from "./ui/use-toast";
 
-export function SongsList() {
-  const { songPlaying } = songStore();
+export function SongsList({ songs }: { songs?: SongType[] }) {
+  const { songPlaying, addToQueue } = songStore();
+  const { toast } = useToast();
+  const handleQueue = (song: SongType) => {
+    addToQueue(song);
+    toast({
+      description: `${song.title} add to queue`,
+      duration: 1200,
+    });
+  };
+
+  const songsToShow = songs ? songs : ALLSONGS;
   return (
     <div className="flex flex-col   max-h-full h-full overflow-y-auto">
-      {songs.map((song, index) => (
+      {songsToShow.map((song, index) => (
         <div
           key={song.id}
           className={`flex justify-between ${
@@ -33,7 +46,14 @@ export function SongsList() {
               <span className="text-xs text-gray-500">{song.author}</span>
             </div>
           </div>
-          {song.sound && <PlayButton song={song} />}
+          {song.sound && (
+            <div className="flex items-center">
+              <button onClick={() => handleQueue(song)}>
+                <PlaylistIcon />
+              </button>
+              <PlayButton song={song} />
+            </div>
+          )}
         </div>
       ))}
     </div>

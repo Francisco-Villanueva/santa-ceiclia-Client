@@ -112,15 +112,15 @@ export function SearchIcon() {
     </svg>
   );
 }
-export function PlayIcon() {
+export function PlayIcon({ size = 6 }: { size?: number }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-6 h-6"
+      stroke="black"
+      className={`w-${size} min-h-6 `}
     >
       <path
         strokeLinecap="round"
@@ -135,7 +135,7 @@ export function PlayIcon() {
     </svg>
   );
 }
-export function PauseIcon() {
+export function PauseIcon({ size = 6 }: { size?: number }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ export function PauseIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6"
+      className={`w-${size} min-h-6 `}
     >
       <path
         strokeLinecap="round"
