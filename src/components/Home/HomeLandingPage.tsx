@@ -1,5 +1,4 @@
 "use client";
-import { PlayIcon } from "@/icons";
 
 import Image from "next/image";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
@@ -27,8 +26,8 @@ const songs: { title: string; owner: string }[] = [
 
 export function HomeLandingPage() {
   return (
-    <ScrollArea className="overflow-y-auto max-h-full  h-full w-full px-6  ">
-      <div className="flex flex-col gap-4 h-full rounded-lg">
+    <div className="w-full">
+      <div className="flex flex-col gap-4 h-full rounded-lg  w-full ">
         {/* --------------------------------- LISTA DE ALBUMS ARRIBA ------------------------------------------- */}
         <section className="flex flex-col gap-2 h-full rounded-lg w-full">
           <div className="flex flex-col  items-start gap-1 text-sm">
@@ -36,7 +35,7 @@ export function HomeLandingPage() {
             <p>Top picks for you. Updated daily.</p>
           </div>
           <hr />
-          <ScrollArea className="max-w-[90%]   ">
+          <ScrollArea className="max-w-full   ">
             <div className="flex gap-2 items-center">
               {albums.map((album, index) => (
                 <div
@@ -69,7 +68,7 @@ export function HomeLandingPage() {
             <p>The last 10 releases</p>
           </div>
           <hr />
-          <ScrollArea className="max-w-[90%]  rounded-md ">
+          <ScrollArea className="max-w-full  rounded-md ">
             <div className="flex gap-10 items-center  ">
               {songs.map((album, index) => (
                 <div
@@ -106,11 +105,11 @@ export function HomeLandingPage() {
             <p>Your personal playlist. Updated daily</p>
           </div>
           <hr />
-          <ScrollArea className="flex flex-col   max-h-[40vh] overflow-y">
+          <ScrollArea className="flex flex-col   max-h-[60vh] overflow-y">
             <SongsList />
           </ScrollArea>
         </section>
       </div>
-    </ScrollArea>
+    </div>
   );
 }

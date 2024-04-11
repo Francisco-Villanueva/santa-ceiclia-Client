@@ -8,8 +8,14 @@ interface ISongsState {
   handlePlaySong: (song: SongType) => void;
   isPlaying: boolean;
   togglePlaying: () => void;
+  stopPlaying: () => void;
+  sideBarStatus: boolean;
+  togglesideBarStatus: () => void;
 }
 export const songStore = create<ISongsState>((set) => ({
+  sideBarStatus: true,
+  togglesideBarStatus: () =>
+    set(({ sideBarStatus }) => ({ sideBarStatus: !sideBarStatus })),
   songs: null,
   songPlaying: null,
   isPlaying: false,
@@ -21,5 +27,9 @@ export const songStore = create<ISongsState>((set) => ({
         return { isPlaying: !isPlaying };
       }
       return { songPlaying: song, isPlaying: true };
+    }),
+  stopPlaying: () =>
+    set(() => {
+      return { songPlaying: null, isPlaying: false };
     }),
 }));
