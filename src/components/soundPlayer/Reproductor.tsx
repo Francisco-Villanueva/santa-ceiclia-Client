@@ -3,10 +3,17 @@ import PlayButton from "@/common/buttons/PlayButton";
 import { ShortArrow } from "@/icons";
 import { songStore } from "@/store";
 import Image from "next/image";
-import React from "react";
+import { Progress } from "../ui/progress";
+import { Slider } from "../ui/slider";
 
 export function Reproductor() {
-  const { songPlaying, nextSong, prevSong } = songStore();
+  const {
+    songPlaying,
+    nextSong,
+    prevSong,
+    time: { progress, duration },
+  } = songStore();
+
   return songPlaying ? (
     <div className="absolute bg-accent border-t  rounded-sm w-full bottom-0 p-4 ">
       <div className="flex   justify-between relative">
@@ -35,16 +42,26 @@ export function Reproductor() {
           </div>
         </div>
 
-        <div className="flex items-center">
-          <button className=" " onClick={prevSong}>
+        <div className="flex items-center  gap-1">
+          <button
+            className="  bg-accent-foreground text-background p-1 rounded-full grid place-items-center h-8 aspect-square "
+            onClick={prevSong}
+          >
             <ShortArrow />
           </button>
-          <PlayButton song={songPlaying} size={10} />
+          <PlayButton song={songPlaying} size={14} />
 
-          <button className=" " onClick={nextSong}>
+          <button
+            className="   bg-accent-foreground text-background p-1 rounded-full grid place-items-center h-8 aspect-square "
+            onClick={nextSong}
+          >
             <ShortArrow direction="right" />
           </button>
         </div>
+      </div>
+      <div className="h-4 py-2">
+        {/* // TODO: hacer un input type 'range' y con eso poder modificar el punto de la cancion */}
+        <Progress value={progress ? progress : 0} />
       </div>
     </div>
   ) : null;

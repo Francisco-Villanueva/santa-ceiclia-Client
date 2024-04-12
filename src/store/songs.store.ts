@@ -4,9 +4,11 @@ import { create } from "zustand";
 interface ISongsState {
   songs: SongType[] | null;
   songPlaying: SongType | null;
+  selectedSong: SongType | null;
   songsQueue: SongType[];
   addToQueue: (songs: SongType) => void;
   setSongs: (songs: SongType[]) => void;
+  setSelectedSong: (song: SongType) => void;
   handlePlaySong: (song: SongType) => void;
   isPlaying: boolean;
   togglePlaying: () => void;
@@ -15,7 +17,22 @@ interface ISongsState {
   togglesideBarStatus: () => void;
   nextSong: () => void;
   prevSong: () => void;
+  time: {
+    duration?: number;
+    played?: number;
+    progress?: number;
+  };
+  setTimePlayed: ({
+    duration,
+    played,
+    progress,
+  }: {
+    duration?: number;
+    played?: number;
+    progress?: number;
+  }) => void;
 }
+
 export const songStore = create<ISongsState>((set) => ({
   sideBarStatus: true,
   togglesideBarStatus: () =>
@@ -24,6 +41,15 @@ export const songStore = create<ISongsState>((set) => ({
   songPlaying: null,
   isPlaying: false,
   songsQueue: [],
+  selectedSong: null,
+  time: {
+    duration: 0,
+    played: 0,
+    progress: 0,
+  },
+  setTimePlayed: ({ duration, played, progress }) =>
+    set(() => ({ time: { duration, played, progress } })),
+  setSelectedSong: (selectedSong) => set(() => ({ selectedSong })),
   togglePlaying: () => set(({ isPlaying }) => ({ isPlaying: !isPlaying })),
   setSongs: (songs) => set(() => ({ songs })),
   addToQueue: (newSong: SongType) =>

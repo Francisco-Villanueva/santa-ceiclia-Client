@@ -10,8 +10,8 @@ import {
 import { songStore } from "@/store";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { ReactNode, useState } from "react";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import React, { ReactNode } from "react";
 interface ISubItems {
   title: string;
   icon: ReactNode;
@@ -21,7 +21,7 @@ const libraryItems: ISubItems[] = [
   { title: "Playlist", icon: PlaylistIcon(), linkTo: "/home/playlist" },
   { title: "Songs", icon: SongsIcon(), linkTo: "/home/songs" },
   { title: "Artistis", icon: MicrophoneIcon(), linkTo: "/home/artists" },
-  { title: "Albums", icon: AlbumIcon(), linkTo: "/home/albums" },
+  { title: "Lyrics", icon: AlbumIcon(), linkTo: "/home/lyrics" },
 ];
 const playlistItems: ISubItems[] = [
   { title: "Rovers", icon: PlaylistIcon(), linkTo: "/home/playlist/rovers" },
@@ -45,6 +45,7 @@ const sidebarItems: { title: string; items?: ISubItems[] }[] = [
 export function SideBar() {
   const { theme } = useTheme();
   const router = useRouter();
+  const pathName = usePathname();
   const { sideBarStatus, togglesideBarStatus } = songStore();
   return (
     <aside
@@ -85,7 +86,9 @@ export function SideBar() {
                 {sidebarItem.items?.map((item) => (
                   <span
                     key={item.linkTo}
-                    className="rounded-lg cursor-pointer transition-all duration-200 p-2 hover:bg-accent  flex items-center gap-1"
+                    className={` ${
+                      pathName.includes(item.linkTo) && "font-semibold"
+                    } rounded-lg cursor-pointer transition-all duration-200 p-2 hover:bg-accent  flex items-center gap-1`}
                     onClick={() => router.push(item.linkTo)}
                   >
                     {item.icon}
