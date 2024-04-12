@@ -31,10 +31,9 @@ export function QueueList() {
           </SheetDescription>
         </SheetHeader>
         <div className="border w-full" />
+
         <div>
-          <section className="border">
-            <SongsList songs={songsQueue} />
-          </section>
+          <SongsList songs={songsQueue} />
         </div>
 
         <div className=" w-full absolute bottom-0 left-0">
