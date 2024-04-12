@@ -58,7 +58,7 @@ export function SongsList({ songs }: { songs?: SongType[] }) {
           }  `}
           key={song.id}
         >
-          <div className="w-6 flex items-center z-40">
+          <div className="w-6 flex items-center ">
             {songPlaying?.id === song.id && <PlayButton song={songPlaying} />}
           </div>
           <section className={`flex justify-between  w-full  `}>
