@@ -1,14 +1,80 @@
 {
   "songs": [
     {
+      "id": 35,
+      "title": "SERVIRE",
+      "year": "1994",
+      "authorId": "id_rovers",
+      "author": "Rovers",
+      "scId": "sc_1994",
+      "lyrics": "",
+      "place": "Santo Tomas",
+      "sound": "https://www.youtube.com/watch?v=T6HSz-Cp6GM"
+    },
+    {
+      "id": 34,
+      "title": "MIRANDO AL SUR",
+      "year": "1995",
+      "authorId": "id_santigoVall",
+      "author": "Santiago Vallasciani",
+      "scId": "sc_nn",
+      "lyrics": "",
+      "place": "en estudio",
+      "sound": "https://www.youtube.com/watch?v=toKD-Fyww3M"
+    },
+    {
+      "id": 33,
+      "title": "VENI ACERCATE",
+      "year": "1983",
+      "authorId": "id_santajuana",
+      "author": "Cjo Santa Juana",
+      "scId": "sc_nn",
+      "lyrics": "",
+      "place": "en estudio",
+      "sound": "https://www.youtube.com/watch?v=ygLdsr9KlUE"
+    },
+    {
+      "id": 32,
+      "title": "EL VALLE AZUL",
+      "year": "2020",
+      "authorId": "id_sinTotem",
+      "author": "Sin Totem",
+      "scId": "sc_nn",
+      "lyrics": "",
+      "place": "en estudio",
+      "sound": "https://www.youtube.com/watch?v=yorXIcBa5pc"
+    },
+    {
+      "id": 31,
+      "title": "CANCION DEL ADIOS",
+      "year": "2020",
+      "authorId": "id_sinTotem",
+      "author": "Sin Totem",
+      "scId": "sc_nn",
+      "lyrics": "",
+      "place": "en estudio",
+      "sound": "https://www.youtube.com/watch?v=1eu9gufgAp4"
+    },
+    {
+      "id": 30,
+      "title": "PEDAZO DE TELA",
+      "year": "2020",
+      "authorId": "id_sinTotem",
+      "author": "Sin Totem",
+      "scId": "sc_nn",
+      "lyrics": "",
+      "place": "en estudio",
+      "sound": "https://www.youtube.com/watch?v=MDZHcIdheK0"
+    },
+    {
       "id": 29,
       "title": "BALAS QUE PICAN CERCA",
-      "year": "1882",
+      "year": "2020",
       "authorId": "id_sinTotem",
       "author": "Sin Totem",
       "scId": "sc_nn",
       "lyrics": "Intro: G D G F C D G\n\nG            F            Em                A\nSon las historias que jamás te cansas de cambiar\nSon las personas en la fotos qué mandas por whatsapp\n\nB7          G7\nPara estimular\nCm7\nla sensación particular\nG\nqué aunque estemos lejos \nA7                         D\ncerca vas a estar\n\n                 G            F\nCuando comienza a irse el sol\n            C           D\nreaparecen las heridas\n                       G            F\nCuando comienza a irse el sol\n            C      D\nte cansas de apostar\n          Em\ncuando comienza a irse el sol\n\n A      C     Cm7\nsolo quedan despedidas\n             G\nnunca encontré mi lugar\nD    G Gsus G\nsiempre quise regresar\n\nSon astillas de esos troncos que cargaste al camión\nEs la pelota\nque rebota fuerte contra el portón \nPara estimular\nLa sensación particular Que aunque estemos lejos Cerca vas a estar\n\nPuente:  B7    Em   A  C   Cm7    D   D7 \n\nEs ese aroma\nen la llanura cuando va a diluviar\nEsa mañana en\nque la lluvia nos dejó dormir más Para estimular\nLa sensación peculiar\nQue aunque estemos lejos Cercas vas a estar\n\nSin totem - 2020\n ",
-      "place": "recovecos",
+      "place": "en estudio",
       "sound": "https://www.youtube.com/watch?v=p2uzuYNjG1Y"
     },
     {
