@@ -49,7 +49,7 @@ export function Reproductor() {
           >
             <ShortArrow />
           </button>
-          <PlayButton song={songPlaying} size={14} />
+          <PlayButton song={songPlaying} size={10} />
 
           <button
             className="   bg-accent-foreground text-background p-1 rounded-full grid place-items-center h-8 aspect-square "

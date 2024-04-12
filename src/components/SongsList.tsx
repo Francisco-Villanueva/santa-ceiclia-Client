@@ -28,6 +28,7 @@ export function SongsList({ songs }: { songs?: SongType[] }) {
   };
 
   const handleSelectSong = (song: SongType) => {
+    if (song.id === songPlaying?.id) return;
     if (!song.sound) {
       return toast({
         title: `${song.title}\n  doesn't have soundtrack`,
@@ -51,43 +52,47 @@ export function SongsList({ songs }: { songs?: SongType[] }) {
   return (
     <div className="flex flex-col   max-h-full h-full overflow-y-auto">
       {songsToShow.map((song, index) => (
-        <Button
-          variant={"ghost"}
-          key={song.id}
-          className={`flex justify-between p-6  ${
+        <article
+          className={`flex  gap-2 p-1 hover:bg-accent w-full transition-all duration-200 cursor-pointer rounded-md ${
             songPlaying?.id === song.id && "bg-accent"
           }  `}
+          key={song.id}
         >
-          <div
-            className="flex  items-start gap-2  flex-grow  "
-            onClick={() => handleSelectSong(song)}
-          >
-            <div className="relative h-10  aspect-square rounded-full  ">
-              <Image
-                src={
-                  index < 6
-                    ? `/covers/cover${index}.jpg`
-                    : "/covers/genericCover.jpg"
-                }
-                alt={song.title}
-                fill
-                objectFit="cover"
-                className="rounded-full aspect-square"
-              />
-            </div>
-            <div className="flex flex-col items-start  ">
-              <h2
-                className={`font-semibold text-md flex items-center ${
-                  songPlaying?.id === song.id && "text-primary"
-                }`}
-              >
-                {song.title} {songPlaying?.id === song.id && <PlayBounce />}
-              </h2>
-              <span className="text-xs text-gray-500">{song.author}</span>
-            </div>
+          <div className="w-6 flex items-center z-40">
+            {songPlaying?.id === song.id && <PlayButton song={songPlaying} />}
           </div>
-          {(song.sound || song.lyrics) && <Dropdown song={song} />}
-        </Button>
+          <section className={`flex justify-between  w-full  `}>
+            <div
+              className="flex  items-center gap-2  flex-grow relative   "
+              onClick={() => handleSelectSong(song)}
+            >
+              <div className="relative h-10  aspect-square rounded-full  ">
+                <Image
+                  src={
+                    index < 6
+                      ? `/covers/cover${index}.jpg`
+                      : "/covers/genericCover.jpg"
+                  }
+                  alt={song.title}
+                  fill
+                  objectFit="cover"
+                  className="rounded-full aspect-square"
+                />
+              </div>
+              <div className="flex flex-col items-start  select-none ">
+                <h2
+                  className={`font-semibold text-md flex items-center  ${
+                    songPlaying?.id === song.id && "text-primary"
+                  }`}
+                >
+                  {song.title} {songPlaying?.id === song.id && <PlayBounce />}
+                </h2>
+                <span className="text-xs text-gray-500">{song.author}</span>
+              </div>
+            </div>
+            {(song.sound || song.lyrics) && <Dropdown song={song} />}
+          </section>
+        </article>
       ))}
     </div>
   );
