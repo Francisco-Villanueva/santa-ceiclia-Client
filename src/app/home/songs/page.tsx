@@ -1,12 +1,6 @@
-"use client";
-import PlayButton from "@/common/buttons/PlayButton";
 import { SongsList } from "@/components";
-import { songs } from "@/mocks/songs.json";
-import { songStore } from "@/store";
-import Image from "next/image";
 
 export default function page() {
-  const { songPlaying } = songStore();
   return (
     <div>
       <section className="flex flex-col gap-2 h-full rounded-lg">

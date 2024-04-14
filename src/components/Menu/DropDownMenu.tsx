@@ -1,20 +1,4 @@
 "use client";
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,46 +6,34 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DotsMenuIcon, LyricsIcon, PlaylistIcon } from "@/icons";
+import { DotsMenuIcon, LyricsIcon, PlayIcon, PlaylistIcon } from "@/icons";
 import { SongType } from "@/types";
 import { songStore } from "@/store";
 import { useToast } from "../ui/use-toast";
-{
-  /* {song.lyrics && (
-              <button onClick={() => setSelectedSong(song)}>
-                <LyricsIcon />
-              </button>
-            )}
-            {song.sound && (
-              <>
-                <button onClick={() => handleQueue(song)}>
-                  <PlaylistIcon />
-                </button>
-              </>
-            )} */
-}
 
 interface DropDownProps {
   song: SongType;
 }
 export function Dropdown({ song }: DropDownProps) {
-  const { addToQueue, setSelectedSong } = songStore();
+  const { addToQueue, songsQueue, removeFromQueue, handlePlaySong } =
+    songStore();
   const { toast } = useToast();
   const handleQueue = (song: SongType) => {
-    addToQueue(song);
-    toast({
-      description: `${song.title} add to queue`,
-      duration: 1200,
-    });
+    if (songsQueue.includes(song)) {
+      removeFromQueue(song);
+      toast({
+        description: `${song.title} remvoed from queue`,
+        duration: 1200,
+      });
+    } else {
+      addToQueue(song);
+      toast({
+        description: `${song.title} add to queue`,
+        duration: 1200,
+      });
+    }
   };
   return (
     <DropdownMenu>
@@ -79,19 +51,22 @@ export function Dropdown({ song }: DropDownProps) {
                 onClick={() => handleQueue(song)}
               >
                 <PlaylistIcon />
-                <span>Add To Queue</span>
+                <span>
+                  {songsQueue.includes(song)
+                    ? "Remove from Queue"
+                    : "Add To Queue"}
+                </span>
               </button>
             </DropdownMenuItem>
           )}
-
-          {song.lyrics && (
+          {song.sound && (
             <DropdownMenuItem>
               <button
                 className=" flex items-center gap-1 transition-all duration-200 hover:bg-accent p-1 px-2 rounded-lg w-full "
-                onClick={() => setSelectedSong(song)}
+                onClick={() => handlePlaySong(song)}
               >
-                <LyricsIcon />
-                <span>Show Lyrics</span>
+                <PlayIcon size={4} />
+                <span>Play Song</span>
               </button>
             </DropdownMenuItem>
           )}

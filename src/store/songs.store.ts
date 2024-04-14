@@ -7,6 +7,7 @@ interface ISongsState {
   selectedSong: SongType | null;
   songsQueue: SongType[];
   addToQueue: (songs: SongType) => void;
+  removeFromQueue: (song: SongType) => void;
   setSongs: (songs: SongType[]) => void;
   setSelectedSong: (song: SongType) => void;
   handlePlaySong: (song: SongType) => void;
@@ -63,6 +64,17 @@ export const songStore = create<ISongsState>((set) => ({
       }
 
       return { ...state };
+    }),
+  removeFromQueue: (songToRemove: SongType) =>
+    set((state) => {
+      const { songsQueue } = state;
+
+      return {
+        ...state,
+        songsQueue: songsQueue.filter(
+          (someSong) => someSong.id !== songToRemove.id
+        ),
+      };
     }),
   handlePlaySong: (song: SongType) =>
     set(({ songPlaying, isPlaying }) => {

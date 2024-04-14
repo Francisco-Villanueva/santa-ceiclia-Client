@@ -120,7 +120,7 @@ export function PlayIcon({ size = 6 }: { size?: number }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`w-${size} min-h-6 `}
+      className={`w-${size}`}
     >
       <path
         strokeLinecap="round"

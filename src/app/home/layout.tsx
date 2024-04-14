@@ -12,25 +12,27 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <Provider>
       <main className="h-[100vh] w-full min-h-screen bg-background text-foreground overflow-hidden    ">
-        <div className="flex h-full max-w-full w-full gap- max-h-full">
-          <SideBar />
-          <PageLayout>
-            <div className="flex flex-col h-full  ">
-              <section className="  h-[10%] ">
-                <div className="  h-full p-4 flex items-center justify-between ">
-                  <SearchInput />
-                  <div className="flex items-center gap-2">
-                    <QueueList />
-                    <ThemeModeToggle />
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex h-[85%] max-w-full w-full   relative  ">
+            <SideBar />
+            <PageLayout>
+              <div className="flex flex-col h-full  ">
+                <section className="  h-[10%]  ">
+                  <div className="  h-full p-4 flex items-center justify-between ">
+                    <SearchInput />
+                    <div className="flex items-center gap-2">
+                      <QueueList />
+                      <ThemeModeToggle />
+                    </div>
                   </div>
-                </div>
-              </section>
-              <div className="h-[85%] overflow-auto p-4">{children}</div>
-            </div>
-          </PageLayout>
+                </section>
+                <div className="h-[90%]  overflow-auto p-4">{children}</div>
+              </div>
+            </PageLayout>
+          </div>
+          <Reproductor />
         </div>
         <Toaster />
-        <Reproductor />
       </main>
     </Provider>
   );

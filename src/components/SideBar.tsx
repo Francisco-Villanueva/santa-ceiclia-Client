@@ -51,7 +51,7 @@ export function SideBar() {
     <aside
       className={`  h-full max-lg:absolute max-lg:z-10 max-lg:bg-background max-lg:border  relative    transition-all duration-300${
         sideBarStatus
-          ? "translate-x-[0% w-[13%] max-lg:w-[30%] max-sm:w-[50%]"
+          ? "translate-x-[0%] w-[13%] max-lg:w-[30%] max-sm:w-[50%]"
           : "translate-x-[-1500%] w-0 max-lg:w-0 "
       }`}
     >
@@ -62,7 +62,7 @@ export function SideBar() {
         <ShortArrow direction={sideBarStatus ? "left" : "right"} />
       </button>
       <div
-        className={` flex flex-col gap-8 h-full md:p-6 items-center transition-all duration-300  ${
+        className={` flex flex-col gap-8 h-full p-2 items-center transition-all duration-300  ${
           sideBarStatus ? "translate-x-[0%] " : "translate-x-[-1500%] "
         }`}
       >
@@ -77,7 +77,7 @@ export function SideBar() {
           </div>
         </div>
 
-        <section className="flex flex-col items-start pl-2 w-full gap-5 flex-grow ">
+        <section className="flex flex-col items-start pl-2 w-full gap-5 flex-grow  ">
           {sidebarItems.map((sidebarItem) => (
             <div
               className="flex flex-col   w-full gap-2"
