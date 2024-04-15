@@ -4,6 +4,8 @@ import { create } from "zustand";
 
 interface IPlaylistState {
   playlists: PlayListType[];
+  playlistPlaying: PlayListType | null;
+  setPlaylistsPlaying: (playlisys: PlayListType) => void;
   setPlaylists: (playlisys: PlayListType[]) => void;
   list: SongType[];
   addToPlaylist: (song: SongType) => void;
@@ -12,6 +14,8 @@ interface IPlaylistState {
 export const playlistStore = create<IPlaylistState>((set) => ({
   list: [],
   playlists: [],
+  playlistPlaying: null,
+  setPlaylistsPlaying: (playlistPlaying) => set(() => ({ playlistPlaying })),
   setPlaylists: (playlists) => set(() => ({ playlists })),
   addToPlaylist: (song) =>
     set((state) => {
