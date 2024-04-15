@@ -1,7 +1,8 @@
 "use client";
 import SoundPlayer from "@/components/soundPlayer/SoundPlayer";
+import { PlaylistService } from "@/services/playlists.services";
 import { SongService } from "@/services/song.services";
-import { songStore } from "@/store";
+import { playlistStore, songStore } from "@/store";
 import React, { ReactNode, useEffect, useState } from "react";
 
 function LoadingBar() {
@@ -14,11 +15,17 @@ function LoadingBar() {
 export default function Provider({ children }: { children: ReactNode }) {
   const [loading, setIsLoading] = useState(false);
   const { setSongs } = songStore();
+  const { setPlaylists } = playlistStore();
   useEffect(() => {
     setIsLoading(true);
     SongService.getAllSongs()
       .then((res) => {
         setSongs(res);
+      })
+      .finally(() => setIsLoading(false));
+    PlaylistService.getAll()
+      .then((res) => {
+        setPlaylists(res);
       })
       .finally(() => setIsLoading(false));
   }, []);

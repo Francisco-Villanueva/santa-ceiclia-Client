@@ -26,17 +26,17 @@ export function Reproductor() {
     songs,
     time: { progress },
   } = songStore();
-
   const songToPlay = songPlaying
     ? songPlaying
     : songs?.filter((song) => song.sound)[0];
+
   return (
-    <div className="h-[15%] w-full   bg-accent border-t  rounded-sm p-4   ">
+    <div className="h-[20%] w-full   bg-accent border-t  rounded-sm p-4   ">
       {songToPlay ? (
-        <>
-          <div className="flex   justify-between relative">
-            <div className="flex gap-4 items-start">
-              <div className="relative aspect-square w-20">
+        <div className="flex flex-col h-full  w-full ">
+          <div className="flex   justify-between relative h-[90%] ">
+            <div className="flex gap-4 items-start h-full  flex-grow ">
+              <div className="relative aspect-square h-full ">
                 <Image
                   src="/covers/genericCover.jpg"
                   alt="cover playlist"
@@ -46,7 +46,7 @@ export function Reproductor() {
                 />
               </div>
               {songPlaying && (
-                <div className="flex flex-col text-secondary-foreground ">
+                <div className="flex flex-col text-secondary-foreground text-lg">
                   <h2 className=" font-bold">{songPlaying.title}</h2>
                   <div className="flex gap-2">
                     <span className=" text-sm font-light">
@@ -83,11 +83,11 @@ export function Reproductor() {
               </button>
             </div>
           </div>
-          <div className="h-4 py-2">
+          <div className="h-4 py-2 border">
             {/* // TODO: hacer un input type 'range' y con eso poder modificar el punto de la cancion */}
             <Progress value={progress ? progress : 0} />
           </div>
-        </>
+        </div>
       ) : (
         <Skeleton className="w-full h-full  " />
       )}
