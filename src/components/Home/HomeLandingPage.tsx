@@ -29,7 +29,10 @@ export function HomeLandingPage() {
             <p>Top picks for you. Updated daily.</p>
           </div>
           <hr />
-          <AlbumList />
+          <ScrollArea className="max-w-full  rounded-md ">
+            <AlbumList />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </section>
         {/* --------------------------------- Ultimos lanzamientos ------------------------------------------- */}
         <section className="flex flex-col gap-2 h-full rounded-lg w-full ">

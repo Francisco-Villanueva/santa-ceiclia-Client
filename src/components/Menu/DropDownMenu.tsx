@@ -6,11 +6,15 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuPortal,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
-import { DotsMenuIcon, LyricsIcon, PlayIcon, PlaylistIcon } from "@/icons";
-import { SongType } from "@/types";
-import { songStore } from "@/store";
+import { DotsMenuIcon, PlayIcon, PlaylistIcon } from "@/icons";
+import { PlayListType, SongType } from "@/types";
+import { playlistStore, songStore } from "@/store";
 import { useToast } from "../ui/use-toast";
 
 interface DropDownProps {
@@ -19,6 +23,8 @@ interface DropDownProps {
 export function Dropdown({ song }: DropDownProps) {
   const { addToQueue, songsQueue, removeFromQueue, handlePlaySong } =
     songStore();
+
+  const { playlists, addToPlaylist, removeFromPlaylist } = playlistStore();
   const { toast } = useToast();
   const handleQueue = (song: SongType) => {
     if (songsQueue.includes(song)) {
@@ -31,6 +37,23 @@ export function Dropdown({ song }: DropDownProps) {
       addToQueue(song);
       toast({
         description: `${song.title} add to queue`,
+        duration: 1200,
+      });
+    }
+  };
+
+  const handleAddToPlaylist = (playlist: PlayListType) => {
+    if (playlist.songs.includes(song)) {
+      // removeFromPlaylist({ playlist, song });
+      toast({
+        description: `${song.title} is already ${playlist.name}`,
+        variant: "destructive",
+        duration: 1200,
+      });
+    } else {
+      addToPlaylist({ playlist, song });
+      toast({
+        description: `${song.title} added to ${playlist.name}`,
         duration: 1200,
       });
     }
@@ -70,6 +93,20 @@ export function Dropdown({ song }: DropDownProps) {
               </button>
             </DropdownMenuItem>
           )}
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Add To Playlist</DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                {playlists.map((playlist) => (
+                  <DropdownMenuItem
+                    onClick={() => handleAddToPlaylist(playlist)}
+                  >
+                    {playlist.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

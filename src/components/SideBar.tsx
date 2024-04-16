@@ -10,7 +10,7 @@ import {
 import { songStore } from "@/store";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { ReactNode } from "react";
 interface ISubItems {
   title: string;
@@ -22,9 +22,6 @@ const libraryItems: ISubItems[] = [
   { title: "Songs", icon: SongsIcon(), linkTo: "/home/songs" },
   { title: "Artistis", icon: MicrophoneIcon(), linkTo: "/home/artists" },
   { title: "Lyrics", icon: AlbumIcon(), linkTo: "/home/lyrics" },
-];
-const playlistItems: ISubItems[] = [
-  { title: "Rovers", icon: PlaylistIcon(), linkTo: "/home/playlist/rovers" },
 ];
 
 const sidebarItems: { title: string; items?: ISubItems[] }[] = [
@@ -51,8 +48,8 @@ export function SideBar() {
     <aside
       className={`  h-full max-lg:absolute max-lg:z-10 max-lg:bg-background max-lg:border  relative    transition-all duration-300${
         sideBarStatus
-          ? "translate-x-[0%] w-[13%] max-lg:w-[30%] max-sm:w-[50%]"
-          : "translate-x-[-1500%] w-0 max-lg:w-0 "
+          ? "translate-x-[0%] w-[13%] max-lg:w-[30%] max-sm:w-0"
+          : "translate-x-[-1500%] w-0 max-lg:w-0 max-sm:w-[50%]"
       }`}
     >
       <button
@@ -63,7 +60,9 @@ export function SideBar() {
       </button>
       <div
         className={` flex flex-col gap-8 h-full p-2 items-center transition-all duration-300  ${
-          sideBarStatus ? "translate-x-[0%] " : "translate-x-[-1500%] "
+          sideBarStatus
+            ? "translate-x-[0%] max-sm:translate-x-[-1500%]"
+            : "translate-x-[-1500%] max-md:translate-x-[0%] "
         }`}
       >
         <div className="w-full flex justify-center max-md:p-6 ">

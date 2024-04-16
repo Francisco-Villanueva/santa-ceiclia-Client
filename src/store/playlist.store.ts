@@ -8,7 +8,20 @@ interface IPlaylistState {
   setPlaylistsPlaying: (playlisys: PlayListType) => void;
   setPlaylists: (playlisys: PlayListType[]) => void;
   list: SongType[];
-  addToPlaylist: (song: SongType) => void;
+  addToPlaylist: ({
+    playlist,
+    song,
+  }: {
+    playlist: PlayListType;
+    song: SongType;
+  }) => void;
+  removeFromPlaylist: ({
+    playlist,
+    song,
+  }: {
+    playlist: PlayListType;
+    song: SongType;
+  }) => void;
 }
 
 export const playlistStore = create<IPlaylistState>((set) => ({
@@ -17,10 +30,17 @@ export const playlistStore = create<IPlaylistState>((set) => ({
   playlistPlaying: null,
   setPlaylistsPlaying: (playlistPlaying) => set(() => ({ playlistPlaying })),
   setPlaylists: (playlists) => set(() => ({ playlists })),
-  addToPlaylist: (song) =>
+  addToPlaylist: ({ playlist, song }) =>
     set((state) => {
-      if (!state.list.includes(song)) {
-        state.list.push(song);
+      if (!playlist.songs.includes(song)) {
+        playlist.songs.push(song);
+      }
+      return { ...state };
+    }),
+  removeFromPlaylist: ({ playlist, song }) =>
+    set((state) => {
+      if (playlist.songs.includes(song)) {
+        playlist.songs.filter((s) => s.id !== song.id);
       }
       return { ...state };
     }),

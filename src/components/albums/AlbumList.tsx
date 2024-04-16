@@ -20,7 +20,7 @@ export function AlbumList() {
   };
 
   return (
-    <ScrollArea className="max-w-full h-full   ">
+    <>
       {playlists.length ? (
         <div className="flex gap-2 items-center">
           {playlists.map((playlist) => (
@@ -68,7 +68,6 @@ export function AlbumList() {
           <Skeleton className="w-30 h-30" />
         </div>
       )}
-      <ScrollBar orientation="horizontal" />
-    </ScrollArea>
+    </>
   );
 }
