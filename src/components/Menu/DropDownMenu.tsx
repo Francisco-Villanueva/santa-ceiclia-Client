@@ -99,6 +99,7 @@ export function Dropdown({ song }: DropDownProps) {
               <DropdownMenuSubContent>
                 {playlists.map((playlist) => (
                   <DropdownMenuItem
+                    key={playlist.name}
                     onClick={() => handleAddToPlaylist(playlist)}
                   >
                     {playlist.name}
