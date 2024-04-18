@@ -65,8 +65,10 @@ export default function Page() {
         </div>
       </section>
 
-      <div className="flex items-center gap-4">
-        <ToggleRamas />
+      <div className="flex items-center gap-4 justify-between">
+        <div className="max-w-[75%] overflow-auto flex">
+          <ToggleRamas />
+        </div>
         <Button size="sm" variant={"outline"} onClick={handleOrder}>
           {order === "Z-A" ? (
             <ArrowBigDownIcon color="#818181" />
