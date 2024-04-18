@@ -1,6 +1,7 @@
 "use client";
 
 import { ToggleRamas } from "@/common";
+import { DropdownRamaFilter, FilterBadges } from "@/components/Menu";
 import RamaImage from "@/components/rama/RamaImage";
 import { Button } from "@/components/ui/button";
 import { ramaStore } from "@/store";
@@ -14,6 +15,9 @@ function SantaCard({ santa }: { santa: SantaCeciliaTpye }) {
   const { ramas } = ramaStore();
 
   const selectedRama = ramas.filter((f) => f.id === santa.winner)[0];
+  const songWinner = santa.songs.filter(
+    (song) => song.authorId === santa.winner
+  )[0];
   return (
     <div className="flex  gap-2 items-center px-4 transition-all duration-200 hover:bg-accent rounded-lg">
       <div className="relative w-16 aspect-square">
@@ -29,7 +33,12 @@ function SantaCard({ santa }: { santa: SantaCeciliaTpye }) {
         )}
       </div>
       <div className="flex justify-between flex-grow">
-        <span className="font-semibold">{santa.place}</span>
+        <div className="flex flex-col">
+          <span className="font-semibold">{santa.place}</span>
+          <span className="text-xs font-light">
+            Cancion: <b> {songWinner?.title}</b>
+          </span>
+        </div>
         <span className="text-xs font-bold">{santa.year}</span>
       </div>
     </div>
@@ -66,8 +75,9 @@ export default function Page() {
       </section>
 
       <div className="flex items-center gap-4 justify-between">
-        <div className="max-w-[75%] overflow-auto flex">
-          <ToggleRamas />
+        <div className="max-w-[75%] overflow-auto flex items-center gap-2">
+          <DropdownRamaFilter />
+          <FilterBadges />
         </div>
         <Button size="sm" variant={"outline"} onClick={handleOrder}>
           {order === "Z-A" ? (

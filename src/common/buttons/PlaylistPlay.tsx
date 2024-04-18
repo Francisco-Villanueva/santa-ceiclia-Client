@@ -8,7 +8,7 @@ interface PlaylistPlayProps {
   playlist: PlayListType;
   buttonSize?: number;
 }
-export function PlaylistPlay({ playlist, buttonSize = 6 }: PlaylistPlayProps) {
+export function PlaylistPlay({ playlist, buttonSize = 10 }: PlaylistPlayProps) {
   const { playlistPlaying, setPlaylistsPlaying } = playlistStore();
   const { isPlaying, handlePlaySong, addToQueue } = songStore();
   const handlePlaylist = (playlist: PlayListType) => {

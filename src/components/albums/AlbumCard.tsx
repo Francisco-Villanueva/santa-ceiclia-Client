@@ -15,10 +15,10 @@ export function AlbumCard({ playlist }: { playlist: PlayListType }) {
   return (
     <div
       key={playlist.id}
-      className="flex flex-col items-start gap-2 hover:bg-accent rounded-lg cursor-pointer transition-all duration-200 p-4    w-[80%]"
+      className="flex flex-col items-start gap-2 hover:bg-accent rounded-lg cursor-pointer transition-all duration-200 p-4 max-md:p-2   w-[80%]"
       onClick={() => router.push(`/home/playlist/${playlist.id}`)}
     >
-      <div className="relative h-full w-full aspect-square ">
+      <div className="relative  w-full max-md:w-36 aspect-square ">
         <Image
           src={playlist.img}
           alt={playlist.name}
@@ -28,10 +28,12 @@ export function AlbumCard({ playlist }: { playlist: PlayListType }) {
         />
       </div>
       <div className="flex flex-col items-start w-full   ">
-        <div className="flex justify-between w-full ">
-          <h2 className="font-semibold text-md">{playlist.name}</h2>
+        <div className="flex  justify-between w-full  ">
+          <h2 className="font-semibold text-md inline-block ">
+            {playlist.name}
+          </h2>
           <span
-            className={`    font-semibold flex items-center gap-1 ${
+            className={`  flex  font-semibold  items-center gap-1   ${
               playlistPlaying?.name === playlist.name && isPlaying
                 ? "text-primary"
                 : ""

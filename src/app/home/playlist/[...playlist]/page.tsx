@@ -22,7 +22,7 @@ export default function PlayListPage() {
   return playlist ? (
     <div className=" h-full">
       <section className="flex  items-center w-full gap-10 max-md:gap-4 max-sm:gap-2 rounded-xl    ">
-        <div className="  h-52 w-52 relative ">
+        <div className="  w-52 aspect-square max-md:w-32 relative ">
           <Image
             src={playlist?.img || ""}
             alt="playlisyname"
@@ -45,8 +45,7 @@ export default function PlayListPage() {
       </section>
       <section className="p-2 flex flex-col gap-2">
         <div className="  flex items-center justify-between">
-          <PlaylistPlay playlist={playlist} buttonSize={20} />
-          {/* <Dropdown  /> */}
+          <PlaylistPlay playlist={playlist} />
           <SearchInput />
         </div>
         <h2 className="text-gray-500">List of Songs </h2>
