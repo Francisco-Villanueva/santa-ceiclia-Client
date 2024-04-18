@@ -7,7 +7,7 @@ export function RamaList() {
   const { theme } = useTheme();
   const { ramas } = ramaStore();
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-4 gap-2 max-md:grid-cols-2 ">
       {ramas.map((rama) => (
         <div
           key={rama.id}

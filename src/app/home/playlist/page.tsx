@@ -5,7 +5,7 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="p-4">
+    <div className="flex flex-col gap-2">
       <section>
         <h2 className=" text-xl font-semibold">Popular Playlists</h2>
 
@@ -14,6 +14,7 @@ export default function page() {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </section>
+      <hr />
       <section>
         <h2 className=" text-xl font-semibold">Paylists por Rama</h2>
 

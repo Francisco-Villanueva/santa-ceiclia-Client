@@ -6,7 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 export function AlbumGrid() {
   const { playlists } = playlistStore();
   return playlists.length ? (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-4 max-md:grid-cols-2">
       {playlists.map((playlist) => (
         <AlbumCard playlist={playlist} key={playlist.id} />
       ))}
