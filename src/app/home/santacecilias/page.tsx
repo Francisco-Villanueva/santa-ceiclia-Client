@@ -1,12 +1,10 @@
 "use client";
-
-import { ToggleRamas } from "@/common";
 import { DropdownRamaFilter, FilterBadges } from "@/components/Menu";
 import RamaImage from "@/components/rama/RamaImage";
 import { Button } from "@/components/ui/button";
 import { ramaStore } from "@/store";
 import { santacecliaStore } from "@/store/santacecilias.store";
-import { RamaType, SantaCeciliaTpye } from "@/types";
+import { SantaCeciliaTpye } from "@/types";
 import { ArrowBigDownIcon, ArrowBigUpIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

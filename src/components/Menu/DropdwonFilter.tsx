@@ -25,6 +25,7 @@ export function DropdownRamaFilter() {
       <DropdownMenuContent align={"start"}>
         {ramas.map((rama) => (
           <div
+            key={rama.id}
             className="flex items-center gap-2"
             onClick={() => handleToggle(rama.id)}
           >

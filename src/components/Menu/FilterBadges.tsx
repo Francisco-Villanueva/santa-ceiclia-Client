@@ -11,7 +11,7 @@ export function FilterBadges() {
   return (
     <div className="flex items-center gap-1">
       {RAMAS.map((rama) => (
-        <RamaBadge rama={rama.name} />
+        <RamaBadge rama={rama.name} key={rama.id} />
       ))}
     </div>
   );
