@@ -10,7 +10,7 @@ interface ListCardProps {
   song: SongType;
   type?: "read" | "play";
   handleSelectSong: (song: SongType) => void;
-  index?: number;
+  index: number;
 }
 export function SongListCard({
   song,
@@ -26,7 +26,11 @@ export function SongListCard({
     >
       {type === "play" && (
         <div className="w-6 flex items-center ">
-          {songPlaying?.id === song.id && <PlayButton song={songPlaying} />}
+          {songPlaying?.id === song.id ? (
+            <PlayButton song={songPlaying} />
+          ) : (
+            index + 1
+          )}
         </div>
       )}
       <section className={`flex justify-between  w-full  `}>

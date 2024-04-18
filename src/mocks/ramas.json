@@ -3,49 +3,73 @@
     {
       "id": "id_alitas",
       "name": "Alitas",
-      "img": "",
+      "img": {
+        "light": "/ramas/alitas-blanco.png",
+        "dark": "/ramas/alitas-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_manada",
       "name": "Manada",
-      "img": "",
+      "img": {
+        "light": "/ramas/manada-blanco.png",
+        "dark": "/ramas/manada-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_caravana",
-      "name": "Caravana",
-      "img": "",
+      "name": "caravana",
+      "img": {
+        "light": "/ramas/caravana-blanco.png",
+        "dark": "/ramas/caravana-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_unidad",
       "name": "Unidad",
-      "img": "",
+      "img": {
+        "light": "/ramas/unidad-blanco.png",
+        "dark": "/ramas/unidad-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_solar",
       "name": "Solar",
-      "img": "",
+      "img": {
+        "light": "/ramas/solar-blanco.png",
+        "dark": "/ramas/solar-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_caminantes",
       "name": "Caminantes",
-      "img": "",
+      "img": {
+        "light": "/ramas/pocho-blanco.png",
+        "dark": "/ramas/pocho-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_clan",
       "name": "Clan",
-      "img": "",
+      "img": {
+        "light": "/ramas/clan-blanco.png",
+        "dark": "/ramas/clan-negro.png"
+      },
       "songs": []
     },
     {
       "id": "id_rovers",
       "name": "Rovers",
-      "img": "",
+      "img": {
+        "light": "/ramas/rovers-blanco.webp",
+        "dark": "/ramas/rovers-negro.webp"
+      },
       "songs": []
     }
   ]

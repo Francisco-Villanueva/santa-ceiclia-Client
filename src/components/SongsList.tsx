@@ -53,6 +53,7 @@ export function SongsList({
       {songsToShow ? (
         songsToShow.map((song, index) => (
           <SongListCard
+            index={index}
             key={song.id}
             song={song}
             handleSelectSong={handleSelectSong}

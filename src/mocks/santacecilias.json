@@ -25,7 +25,7 @@
           "place": "recovecos"
         }
       ],
-      "winner": "..",
+      "winner": "",
       "place": "recovecos"
     },
     {
@@ -33,21 +33,21 @@
       "year": 2011,
       "songs": [],
       "winner": "id_unidad",
-      "place": "cuauthorlal"
+      "place": "Curamalal"
     },
     {
       "id": "sc_2012",
       "year": 2012,
       "songs": [],
       "winner": "id_rovers",
-      "place": "la paz IV"
+      "place": "La Paz IV"
     },
     {
       "id": "sc_2013",
       "year": 2013,
       "songs": [],
       "winner": "id_caminantes",
-      "place": "las torcazas"
+      "place": "Las Torcazas"
     },
     {
       "id": "sc_2014",
@@ -61,7 +61,7 @@
       "year": 2015,
       "songs": [],
       "winner": "id_manada",
-      "place": "la paz V"
+      "place": "La Paz V"
     },
     {
       "id": "sc_2017",
@@ -75,7 +75,7 @@
           "author": "Cjo Comunidad",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 6,
@@ -85,7 +85,7 @@
           "author": "Rovers",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 11,
@@ -95,7 +95,7 @@
           "author": "Familias",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 12,
@@ -105,7 +105,7 @@
           "author": "Caminantes",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 120,
@@ -115,7 +115,7 @@
           "author": "clan",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 13,
@@ -125,7 +125,7 @@
           "author": "Unidad",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 14,
@@ -135,7 +135,7 @@
           "author": "Carava",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 15,
@@ -145,7 +145,7 @@
           "author": "Solar",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         },
         {
           "id": 16,
@@ -155,11 +155,11 @@
           "author": "Alitas",
           "scId": "sc_2017",
           "lyrics": "",
-          "place": "las torcazas"
+          "place": "Las Torcazas"
         }
       ],
       "winner": "id_alitas",
-      "place": "las torcazas"
+      "place": "Las Torcazas"
     },
     {
       "id": "sc_2010",
@@ -173,7 +173,7 @@
           "author": "Rovers",
           "scId": "sc_2010",
           "lyrics": "",
-          "place": "la paz III"
+          "place": "La Paz III"
         },
         {
           "id": 9,
@@ -183,7 +183,7 @@
           "author": "Cjo Comunidad",
           "scId": "sc_2010",
           "lyrics": "",
-          "place": "la paz III"
+          "place": "La Paz III"
         },
         {
           "id": 10,
@@ -193,11 +193,11 @@
           "author": "Clan",
           "scId": "sc_2010",
           "lyrics": "",
-          "place": "la paz III"
+          "place": "La Paz III"
         }
       ],
       "winner": "id_rovers",
-      "place": "la paz III"
+      "place": "La Paz III"
     },
     {
       "id": "sc_2016",
@@ -312,7 +312,7 @@
       "year": 2018,
       "songs": [],
       "winner": "id_caminantes",
-      "place": "las torcazas"
+      "place": "Las Torcazas"
     },
     {
       "id": "sc_2019",
@@ -333,7 +333,7 @@
       "year": 2023,
       "songs": [],
       "winner": "id_rovers",
-      "place": "las torcazas"
+      "place": "Las Torcazas"
     },
     {
       "id": "sc_2009",
@@ -347,14 +347,14 @@
       "year": 2008,
       "songs": [],
       "winner": "id_rovers",
-      "place": "La paz II"
+      "place": "La Paz II"
     },
     {
       "id": "sc_2007",
       "year": 2007,
       "songs": [],
       "winner": "id_rovers",
-      "place": "La paz I"
+      "place": "La Paz I"
     },
     {
       "id": "sc_2006",

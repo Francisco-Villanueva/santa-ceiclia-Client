@@ -31,9 +31,9 @@ export function Reproductor() {
     : songs?.filter((song) => song.sound)[0];
 
   return (
-    <div className="h-[20%] w-full   bg-accent border-t  rounded-sm p-4   ">
+    <div className="h-full   w-full   bg-accent border-t  rounded-sm p-4   ">
       {songToPlay ? (
-        <div className="flex flex-col h-full  w-full ">
+        <div className="flex flex-col h-full gap-1  w-full ">
           <div className="flex   justify-between relative h-[90%] ">
             <div className="flex gap-4 items-start h-full  flex-grow ">
               <div className="relative aspect-square h-full ">
@@ -46,19 +46,15 @@ export function Reproductor() {
                 />
               </div>
               {songPlaying && (
-                <div className="flex flex-col text-secondary-foreground text-lg">
+                <div className="flex flex-col text-secondary-foreground text-lg max-md:text-sm">
                   <h2 className=" font-bold">{songPlaying.title}</h2>
-                  <div className="flex gap-2">
-                    <span className=" text-sm font-light">
-                      {songPlaying.author}
-                    </span>
+                  <div className="flex gap-2 text-sm  max-md:text-xs">
+                    <span className="  font-light">{songPlaying.author}</span>
                     <div className="border border-black" />
-                    <span className=" text-sm font-light">
-                      {songPlaying.year}
-                    </span>
+                    <span className="  font-light">{songPlaying.year}</span>
                   </div>
 
-                  <div className="text-xs font-light mt-1">
+                  <div className="text-xs   max-md:text-[10px] font-light mt-1">
                     <span>Grabada en: </span>
                     <span>{songPlaying.place} </span>
                   </div>
@@ -83,8 +79,7 @@ export function Reproductor() {
               </button>
             </div>
           </div>
-          <div className="h-4 py-2 border">
-            {/* // TODO: hacer un input type 'range' y con eso poder modificar el punto de la cancion */}
+          <div>
             <Progress value={progress ? progress : 0} />
           </div>
         </div>

@@ -12,8 +12,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <Provider>
       <main className="h-[100vh] w-full min-h-screen bg-background text-foreground overflow-hidden    ">
-        <div className="flex flex-col justify-between h-full">
-          <div className="flex h-[85%] max-w-full w-full   relative  ">
+        <div className="flex flex-col justify-between h-full relative">
+          <div className="flex h-[85%] max-h-[85%] min-h-[85%] max-w-full w-full   relative  ">
             <SideBar />
             <PageLayout>
               <div className="flex flex-col h-full  ">

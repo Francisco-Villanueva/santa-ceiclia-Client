@@ -7,7 +7,7 @@ export default function page() {
   const filteredSongs = songs?.filter((song) => song.lyrics);
 
   return (
-    <div className=" rounded-xl  h-full w-full flex justify-between gap-2 max-md:flex-col md:p-2 ">
+    <div className=" rounded-xl  h-full w-full flex justify-between gap-2 max-md:flex-col md:p-2  ">
       <div className="w-1/4  h-full flex flex-col gap-2 p-2 border rounded-xl max-md:w-full max-md:h-1/4 ">
         <h2 className="font-bold">Canciones con Letra</h2>
         <div className="w-1/3 border" />

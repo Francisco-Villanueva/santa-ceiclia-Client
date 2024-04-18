@@ -1,13 +1,12 @@
 "use client";
-
 import { playlistStore } from "@/store";
-import { Skeleton } from "../ui/skeleton";
 import { AlbumCard } from "./AlbumCard";
+import { Skeleton } from "../ui/skeleton";
 
-export function AlbumList() {
+export function AlbumGrid() {
   const { playlists } = playlistStore();
   return playlists.length ? (
-    <div className="flex  gap-2 items-center">
+    <div className="grid grid-cols-4">
       {playlists.map((playlist) => (
         <AlbumCard playlist={playlist} key={playlist.id} />
       ))}

@@ -20,7 +20,11 @@ interface ISubItems {
 const libraryItems: ISubItems[] = [
   { title: "Playlist", icon: PlaylistIcon(), linkTo: "/home/playlist" },
   { title: "Songs", icon: SongsIcon(), linkTo: "/home/songs" },
-  { title: "Artistis", icon: MicrophoneIcon(), linkTo: "/home/artists" },
+  {
+    title: "Santa Cecilias",
+    icon: MicrophoneIcon(),
+    linkTo: "/home/santacecilias",
+  },
   { title: "Lyrics", icon: AlbumIcon(), linkTo: "/home/lyrics" },
 ];
 
