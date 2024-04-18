@@ -7,17 +7,22 @@ import { santacecliaStore } from "@/store/santacecilias.store";
 import { SantaCeciliaTpye } from "@/types";
 import { ArrowBigDownIcon, ArrowBigUpIcon } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function SantaCard({ santa }: { santa: SantaCeciliaTpye }) {
   const { ramas } = ramaStore();
+  const router = useRouter();
 
   const selectedRama = ramas.filter((f) => f.id === santa.winner)[0];
   const songWinner = santa.songs.filter(
     (song) => song.authorId === santa.winner
   )[0];
   return (
-    <div className="flex  gap-2 items-center px-4 transition-all duration-200 hover:bg-accent rounded-lg">
+    <div
+      className="flex  gap-2 items-center px-4 transition-all duration-200 hover:bg-accent rounded-lg cursor-pointer"
+      onClick={() => router.push(`/home/santacecilias/${santa.id}`)}
+    >
       <div className="relative w-16 aspect-square">
         {santa.winner ? (
           <RamaImage rama={selectedRama} />
@@ -62,7 +67,7 @@ export default function Page() {
     : santacecilias;
 
   return (
-    <div className="flex flex-col gap-2 h-full">
+    <div className="flex flex-col gap-2 h-full ">
       <section className="">
         <div className="flex flex-col  items-start gap-1 text-sm">
           <span className="font-bold text-xl">
