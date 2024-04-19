@@ -31,7 +31,7 @@ export default function PlayListPage() {
             objectFit="cover"
           />
         </div>
-        <div className="flex flex-col  gap-8 z-10 p-6 max-sm:p-0">
+        <div className="flex flex-col  gap-8  p-6 max-sm:p-0">
           <div className="flex flex-col gap-2">
             <h2 className="text-3xl font-bold">{playlist?.name}</h2>
             <div className="text-gray-500 flex items-center gap-1">
