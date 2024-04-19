@@ -3,7 +3,7 @@ import { RamaType } from "@/types";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 
-export default function RamaImage({ rama }: { rama: RamaType }) {
+export default function RamaImage({ rama }: { rama?: RamaType }) {
   const { theme } = useTheme();
 
   return rama ? (

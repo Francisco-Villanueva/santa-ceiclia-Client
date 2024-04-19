@@ -1,8 +1,8 @@
 "use client";
 import { songStore } from "@/store";
 import { SongType } from "@/types";
-import { useToast } from "./ui/use-toast";
-import { Skeleton } from "./ui/skeleton";
+import { useToast } from "../ui/use-toast";
+import { Skeleton } from "../ui/skeleton";
 import { SongListCard } from "@/common";
 
 export function SongsList({

@@ -118,8 +118,8 @@
           "id": 120,
           "title": "AQUÍ DENTRO",
           "year": "2017",
-          "authorId": "id_clan",
-          "author": "clan",
+          "authorId": "id_Clan",
+          "author": "Clan",
           "scId": "sc_2017",
           "lyrics": "",
           "place": "Las Torcazas"
@@ -196,7 +196,7 @@
           "id": 10,
           "title": "QUE MI META SIEMPRE SEA SERVIR",
           "year": "2010",
-          "authorId": "id_clan",
+          "authorId": "id_Clan",
           "author": "Clan",
           "scId": "sc_2010",
           "lyrics": "",
@@ -254,7 +254,7 @@
           "id": 21,
           "title": "INSTINTO DE HERMANO",
           "year": "2016",
-          "authorId": "id_clan",
+          "authorId": "id_Clan",
           "author": "Clan",
           "scId": "sc_2016",
           "lyrics": "",
@@ -268,7 +268,8 @@
           "author": "Rovers",
           "scId": "sc_2016",
           "lyrics": "",
-          "place": "San Mario"
+          "place": "San Mario",
+          "sound": "https://www.youtube.com/watch?v=5M0aR0yQths"
         },
         {
           "id": 23,
@@ -311,7 +312,7 @@
           "place": "San Mario"
         }
       ],
-      "winner": "id_clan",
+      "winner": "id_Clan",
       "place": "San Mario"
     },
     {
@@ -367,7 +368,7 @@
       "id": "sc_2006",
       "year": 2006,
       "songs": [],
-      "winner": "id_clan",
+      "winner": "id_Clan",
       "place": "El remanso"
     },
     {

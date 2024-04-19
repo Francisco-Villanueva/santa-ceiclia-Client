@@ -41,7 +41,7 @@ export function AlbumCard({ playlist }: { playlist: PlayListType }) {
           >
             {playlist.songs.length}
 
-            <PlaylistPlay playlist={playlist} />
+            {playlist.songs.length > 0 && <PlaylistPlay playlist={playlist} />}
           </span>
         </div>
         <span className="text-xs text-gray-500">{playlist.owner}</span>

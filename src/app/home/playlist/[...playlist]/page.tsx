@@ -45,7 +45,7 @@ export default function PlayListPage() {
       </section>
       <section className="p-2 flex flex-col gap-2">
         <div className="  flex items-center justify-between">
-          <PlaylistPlay playlist={playlist} />
+          <PlaylistPlay playlist={playlist} buttonSize={10} />
           <SearchInput />
         </div>
         <h2 className="text-gray-500">List of Songs </h2>

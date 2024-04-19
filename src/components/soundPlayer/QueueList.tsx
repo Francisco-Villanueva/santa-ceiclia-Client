@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { PlaylistIcon } from "@/icons";
 import { songStore } from "@/store";
-import { SongsList } from "../SongsList";
+import { SongsList } from "@/components";
 import { Reproductor } from "./Reproductor";
 
 export function QueueList() {

@@ -20,7 +20,7 @@
     },
     {
       "id": "id_caravana",
-      "name": "Carvana",
+      "name": "Caravana",
       "img": {
         "light": "/ramas/caravana-blanco.png",
         "dark": "/ramas/caravana-negro.png"

@@ -1,6 +1,6 @@
 "use client";
 import { RamaBadge } from "@/common";
-import { SongsList } from "@/components";
+import { SantaSongsList, SongsList } from "@/components";
 import { ramaStore, santacecliaStore } from "@/store";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -41,13 +41,10 @@ export default function SantaPage() {
         </div>
       </header>
 
-      <hr />
-      <section className="flex-grow flex flex-col">
-        <h2 className="font-semibold text-foreground text-2xl">Canciones</h2>
-
-        <div className=" flex-grow">
+      <section className="flex-grow flex flex-col h-1/6">
+        <div className=" flex-grow  max-h-full overflow-auto">
           {santa.songs.length ? (
-            <SongsList songs={santa.songs} />
+            <SantaSongsList songs={santa.songs} />
           ) : (
             <div className="h-full  flex flex-col justify-center items-center text-gray-400  ">
               <div className="relative h-40 aspect-square">
