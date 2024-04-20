@@ -1,7 +1,5 @@
 import { SongType } from "@/types";
-import RamaImage from "../rama/RamaImage";
-import { ramaStore, songStore } from "@/store";
-import PlayButton from "@/common/buttons/PlayButton";
+import { songStore } from "@/store";
 import { SongListCard } from "@/common";
 import { useToast } from "../ui/use-toast";
 
@@ -52,7 +50,7 @@ function SongCard({
 
   return (
     <div className="flex items-center gap-2 transition-all duration-300 hover:bg-muted px-2 rounded-md">
-      <SongListCard handleSelectSong={handleSelectSong} song={song} />
+      {song && <SongListCard handleSelectSong={handleSelectSong} song={song} />}
     </div>
   );
 }

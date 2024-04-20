@@ -1,15 +1,25 @@
 "use client";
 import { RamaBadge } from "@/common";
-import { SantaSongsList, SongsList } from "@/components";
+import { SantaSongsList } from "@/components";
 import { ramaStore, santacecliaStore } from "@/store";
+import { SantaCeciliaTpye } from "@/types";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SantaPage() {
   const { santaId } = useParams();
   const { santacecilias } = santacecliaStore();
   const { ramas } = ramaStore();
-  const santa = santacecilias.filter((s) => s.id === santaId[0])[0];
+
+  const [santa, setSanta] = useState<SantaCeciliaTpye>();
+
+  useEffect(() => {
+    const santa = santacecilias.filter((s) => s.id === santaId[0])[0];
+
+    setSanta(santa);
+  }, [santaId]);
+
   const ramaWinner = ramas?.filter((r) => r.id === santa?.winner)[0];
 
   return santa ? (

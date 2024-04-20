@@ -19,6 +19,7 @@ export function SongListCard({
   type = "play",
 }: ListCardProps) {
   const { songPlaying } = songStore();
+
   return (
     <article
       className={`flex  gap-2 p-1 hover:bg-accent w-full transition-all duration-200 cursor-pointer rounded-md  `}
@@ -28,7 +29,7 @@ export function SongListCard({
         <div className="w-6 flex items-center ">
           {songPlaying?.id === song.id ? (
             <PlayButton song={songPlaying} />
-          ) : index ? (
+          ) : index !== undefined ? (
             index + 1
           ) : null}
         </div>
