@@ -1,11 +1,11 @@
-import { SantaCeciliaTpye } from "@/types";
-import { santacecilias } from "@/mocks/santacecilias.json";
+import { SantaCeciliaType } from "@/types";
+import { apiGet } from "./http";
+
 export class SantaCeciliaServices {
-  static async getAll() {
-    return new Promise<SantaCeciliaTpye[]>((resolve, rejct) => {
-      setTimeout(() => {
-        resolve(santacecilias);
-      }, 0);
-    });
+  static getAll() {
+    return apiGet<SantaCeciliaType[]>("/festivals");
+  }
+  static getById(id: SantaCeciliaType["id"]) {
+    return apiGet<SantaCeciliaType>(`/festivals/${id}`);
   }
 }

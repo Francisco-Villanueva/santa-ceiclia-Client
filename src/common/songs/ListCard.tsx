@@ -1,5 +1,5 @@
 "use client";
-import { songStore } from "@/store";
+import { songStore, useIsMaster } from "@/store";
 import { SongType } from "@/types";
 import PlayButton from "../buttons/PlayButton";
 import Image from "next/image";
@@ -19,6 +19,7 @@ export function SongListCard({
   type = "play",
 }: ListCardProps) {
   const { songPlaying } = songStore();
+  const isMaster = useIsMaster();
 
   return (
     <article
@@ -63,7 +64,7 @@ export function SongListCard({
             <span className="text-xs text-gray-500">{song.author}</span>
           </div>
         </div>
-        {(song.sound || song.lyrics) && <Dropdown song={song} />}
+        {(song.sound || song.lyrics || isMaster) && <Dropdown song={song} />}
       </section>
     </article>
   );

@@ -2,7 +2,7 @@
 import { RamaBadge } from "@/common";
 import { SantaSongsList } from "@/components";
 import { ramaStore, santacecliaStore } from "@/store";
-import { SantaCeciliaTpye } from "@/types";
+import { SantaCeciliaType } from "@/types";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ export default function SantaPage() {
   const { santacecilias } = santacecliaStore();
   const { ramas } = ramaStore();
 
-  const [santa, setSanta] = useState<SantaCeciliaTpye>();
+  const [santa, setSanta] = useState<SantaCeciliaType>();
 
   useEffect(() => {
     const santa = santacecilias.filter((s) => s.id === santaId[0])[0];

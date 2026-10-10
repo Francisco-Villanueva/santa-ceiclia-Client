@@ -1,5 +1,6 @@
 "use client";
 import { SongsList } from "@/components";
+import { LyricsViewer } from "@/components/lyrics/LyricsViewer";
 import { songStore } from "@/store";
 
 export default function page() {
@@ -21,13 +22,7 @@ export default function page() {
               <h2 className="font-bold"> {selectedSong.title}</h2>
               <span className="text-xs"> - {selectedSong.author}</span>
             </div>
-            <div className=" h-[100%] max-h-[100%]  overflow-y-auto overflow-x-hidden p-1">
-              <pre
-                className={`font-inter  columns-2 max-md:columns-1 text-[15px] max-md:text-[10px]`}
-              >
-                {selectedSong.lyrics}
-              </pre>
-            </div>
+            <LyricsViewer key={selectedSong.id} song={selectedSong} />
           </div>
         ) : (
           <div className="h-full w-full flex justify-center items-center rounded-xl ">

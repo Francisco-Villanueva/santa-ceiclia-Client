@@ -1,11 +1,11 @@
-import { playlists } from "@/mocks/playlists.json";
 import { PlayListType } from "@/types";
+import { apiGet } from "./http";
+
 export class PlaylistService {
-  static async getAll() {
-    return new Promise<PlayListType[]>((resolve, rejct) => {
-      setTimeout(() => {
-        resolve(playlists);
-      }, 0);
-    });
+  static getAll() {
+    return apiGet<PlayListType[]>("/playlists");
+  }
+  static getById(id: PlayListType["id"]) {
+    return apiGet<PlayListType>(`/playlists/${id}`);
   }
 }

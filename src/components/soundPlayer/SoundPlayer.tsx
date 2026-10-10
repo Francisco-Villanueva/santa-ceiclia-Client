@@ -13,7 +13,7 @@ export default function SoundPlayer() {
 
   return (
     <ReactPlayer
-      url={songPlaying?.sound}
+      url={songPlaying?.sound ?? undefined}
       onDuration={(duration) => setTimePlayed({ duration })}
       onProgress={({ playedSeconds, loadedSeconds }) =>
         duration

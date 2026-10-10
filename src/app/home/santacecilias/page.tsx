@@ -4,19 +4,19 @@ import RamaImage from "@/components/rama/RamaImage";
 import { Button } from "@/components/ui/button";
 import { ramaStore } from "@/store";
 import { santacecliaStore } from "@/store/santacecilias.store";
-import { SantaCeciliaTpye } from "@/types";
+import { SantaCeciliaType } from "@/types";
 import { ArrowBigDownIcon, ArrowBigUpIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-function SantaCard({ santa }: { santa: SantaCeciliaTpye }) {
+function SantaCard({ santa }: { santa: SantaCeciliaType }) {
   const { ramas } = ramaStore();
   const router = useRouter();
 
   const selectedRama = ramas.filter((f) => f.id === santa.winner)[0];
   const songWinner = santa.songs.filter(
-    (song) => song.authorId === santa.winner
+    (song) => song.branchId === santa.winner
   )[0];
   return (
     <div
@@ -50,7 +50,7 @@ function SantaCard({ santa }: { santa: SantaCeciliaTpye }) {
 export default function Page() {
   const { santacecilias, santasFilter } = santacecliaStore();
   const [order, setOrder] = useState<"A-Z" | "Z-A">("Z-A");
-  const [sortedSantas, setSantas] = useState<SantaCeciliaTpye[]>(santacecilias);
+  const [sortedSantas, setSantas] = useState<SantaCeciliaType[]>(santacecilias);
 
   const handleOrder = () => {
     if (order === "A-Z") {
@@ -63,7 +63,7 @@ export default function Page() {
   };
 
   const santasToShow = santasFilter.length
-    ? santacecilias.filter((santa) => santasFilter.includes(santa.winner))
+    ? santacecilias.filter((santa) => santasFilter.includes(santa.winner ?? ""))
     : santacecilias;
 
   return (

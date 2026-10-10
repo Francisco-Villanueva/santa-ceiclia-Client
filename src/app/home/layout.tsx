@@ -5,6 +5,7 @@ import React, { ReactNode } from "react";
 import Provider from "./Provider";
 import { QueueList, Reproductor } from "@/components/soundPlayer";
 import PageLayout from "@/common/PageLayout";
+import { UserMenu } from "@/components/auth/UserMenu";
 interface RootLayoutProps {
   children: ReactNode;
 }
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     <div className="flex items-center gap-2">
                       <QueueList />
                       <ThemeModeToggle />
+                      <UserMenu />
                     </div>
                   </div>
                 </section>

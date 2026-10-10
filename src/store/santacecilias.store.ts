@@ -1,9 +1,9 @@
-import { SantaCeciliaTpye } from "@/types";
+import { SantaCeciliaType } from "@/types";
 import { create } from "zustand";
 
 interface ISantaState {
-  santacecilias: SantaCeciliaTpye[];
-  setSantacecilias: (santas: SantaCeciliaTpye[]) => void;
+  santacecilias: SantaCeciliaType[];
+  setSantacecilias: (santas: SantaCeciliaType[]) => void;
   santasFilter: string[];
   handleSantasFilter: (filter: string) => void;
 }

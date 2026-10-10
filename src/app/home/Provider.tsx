@@ -4,7 +4,13 @@ import { PlaylistService } from "@/services/playlists.services";
 import { RamaServices } from "@/services/ramas.services";
 import { SantaCeciliaServices } from "@/services/santacecilia.services";
 import { SongService } from "@/services/song.services";
-import { playlistStore, ramaStore, songStore, santacecliaStore } from "@/store";
+import {
+  authStore,
+  playlistStore,
+  ramaStore,
+  songStore,
+  santacecliaStore,
+} from "@/store";
 import React, { ReactNode, useEffect, useState } from "react";
 
 export function LoadingBar() {
@@ -20,12 +26,14 @@ export default function Provider({ children }: { children: ReactNode }) {
   const { setPlaylists } = playlistStore();
   const { setSantacecilias } = santacecliaStore();
   const { setRamas } = ramaStore();
+  const { fetchMe } = authStore();
   useEffect(() => {
     // setIsLoading(true);
     SongService.getAllSongs().then((res) => setSongs(res));
     PlaylistService.getAll().then((res) => setPlaylists(res));
     SantaCeciliaServices.getAll().then((res) => setSantacecilias(res));
     RamaServices.getAll().then((res) => setRamas(res));
+    fetchMe();
   }, []);
   return (
     <div>

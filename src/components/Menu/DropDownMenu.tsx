@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DotsMenuIcon, PlayIcon, PlaylistIcon } from "@/icons";
 import { PlayListType, SongType } from "@/types";
-import { playlistStore, songStore } from "@/store";
+import { playlistStore, songStore, useIsMaster } from "@/store";
+import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 
 interface DropDownProps {
@@ -26,6 +27,8 @@ export function Dropdown({ song }: DropDownProps) {
 
   const { playlists, addToPlaylist, removeFromPlaylist } = playlistStore();
   const { toast } = useToast();
+  const router = useRouter();
+  const isMaster = useIsMaster();
   const handleQueue = (song: SongType) => {
     if (songsQueue.includes(song)) {
       removeFromQueue(song);
@@ -91,6 +94,13 @@ export function Dropdown({ song }: DropDownProps) {
                 <PlayIcon size={4} />
                 <span>Play Song</span>
               </button>
+            </DropdownMenuItem>
+          )}
+          {isMaster && (
+            <DropdownMenuItem
+              onClick={() => router.push(`/home/songs/${song.id}/edit`)}
+            >
+              Editar
             </DropdownMenuItem>
           )}
           <DropdownMenuSub>

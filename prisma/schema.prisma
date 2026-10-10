@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  MASTER // puede cargar y editar canciones, letras, audios, autores y festivales
+  MEMBER // puede escuchar y gestionar sus propias playlists
+}
+
+enum AuthorType {
+  BRANCH // una de las 8 ramas (requiere branchId)
+  PERSON
+  GROUP
+  OTHER
+}
+
+enum AudioKind {
+  FILE // archivo subido al storage (storageKey)
+  YOUTUBE // link externo (url)
+}
+
+enum LyricsFormat {
+  CHORDPRO // "Cuando [Am]sale la [G]luna"
+  CHORDS_OVER_LYRICS // acordes en una línea encima de la letra (formato legado)
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String?
+  role         Role     @default(MEMBER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  playlists Playlist[]
+  songs     Song[]     @relation("SongCreatedBy")
+}
+
+model Branch {
+  id        String  @id @default(cuid())
+  slug      String  @unique // alitas, manada, caravana, unidad, solar, caminantes, clan, rovers
+  name      String
+  position  Int // orden de visualización
+  logoLight String?
+  logoDark  String?
+
+  author       Author?
+  festivalsWon Festival[]
+}
+
+model Author {
+  id       String     @id @default(cuid())
+  name     String
+  type     AuthorType
+  branchId String?    @unique // solo si type = BRANCH
+  branch   Branch?    @relation(fields: [branchId], references: [id])
+
+  songs Song[]
+
+  @@unique([name, type])
+}
+
+model Festival {
+  id             String  @id @default(cuid())
+  year           Int     @unique
+  place          String?
+  winnerBranchId String?
+  winnerBranch   Branch? @relation(fields: [winnerBranchId], references: [id])
+
+  songs Song[]
+}
+
+model Song {
+  id          Int       @id @default(autoincrement())
+  title       String
+  year        Int
+  place       String?
+  authorId    String
+  author      Author    @relation(fields: [authorId], references: [id])
+  festivalId  String?
+  festival    Festival? @relation(fields: [festivalId], references: [id])
+  createdById String?
+  createdBy   User?     @relation("SongCreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  lyrics    SongLyrics?
+  audios    SongAudio[]
+  playlists PlaylistSong[]
+
+  @@index([authorId])
+  @@index([festivalId])
+  @@index([year])
+}
+
+model SongLyrics {
+  songId      Int          @id
+  song        Song         @relation(fields: [songId], references: [id], onDelete: Cascade)
+  content     String // texto completo, con acordes embebidos según `format`
+  format      LyricsFormat @default(CHORDPRO)
+  hasChords   Boolean      @default(false)
+  originalKey String?
+  updatedAt   DateTime     @updatedAt
+}
+
+model SongAudio {
+  id          String    @id @default(cuid())
+  songId      Int
+  song        Song      @relation(fields: [songId], references: [id], onDelete: Cascade)
+  kind        AudioKind
+  storageKey  String? // clave en el storage cuando kind = FILE
+  url         String? // link externo cuando kind = YOUTUBE
+  mimeType    String?
+  sizeBytes   Int?
+  durationSec Int?
+  createdAt   DateTime  @default(now())
+
+  @@index([songId])
+}
+
+model Playlist {
+  id        String         @id @default(cuid())
+  name      String
+  cover     String?
+  isPublic  Boolean        @default(true)
+  ownerId   String
+  owner     User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt DateTime       @default(now())
+  songs     PlaylistSong[]
+
+  @@index([ownerId])
+}
+
+model PlaylistSong {
+  playlistId String
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  songId     Int
+  song       Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  position   Int
+
+  @@id([playlistId, songId])
+}
