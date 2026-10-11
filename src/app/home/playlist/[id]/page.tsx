@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { UserIcon } from "lucide-react";
 import { PlaylistPlay } from "@/common/buttons/PlaylistPlay";
-import { SearchInput, SongsList } from "@/components";
+import { SongsList } from "@/components";
 import { getPublicPlaylist } from "@/lib/data/catalog";
 
 type Props = { params: Promise<{ id: string }> };
@@ -44,7 +44,6 @@ export default async function PlayListPage({ params }: Props) {
       <section className="p-2 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <PlaylistPlay playlist={playlist} buttonSize={10} />
-          <SearchInput />
         </div>
         <h2 className="text-gray-500">List of Songs</h2>
         <SongsList songs={playlist.songs} />

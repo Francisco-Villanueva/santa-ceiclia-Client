@@ -73,7 +73,7 @@ Alias `@/` → `src/`. Los archivos del repo usan **CRLF** (git `autocrlf`); al 
 
 ## API
 
-Lectura (pública): `GET /api/songs` (filtros `q`, `branch` slug, `author`, `year`, `festival`, `hasLyrics`, `hasChords`, `hasAudio`), `/songs/[id]`, `/branches` y `/branches/[id]` (id o slug), `/authors`, `/festivals` y `/festivals/[id]` (incluyen canciones), `/playlists` y `/playlists/[id]` (solo públicas).
+Lectura (pública): `GET /api/songs` (filtros `q` —título o autor, sin distinguir tildes ni mayúsculas—, `branch` slug, `author`, `year`, `festival`, `hasLyrics`, `hasChords`, `hasAudio`), `/songs/[id]`, `/branches` y `/branches/[id]` (id o slug), `/authors`, `/festivals` y `/festivals/[id]` (incluyen canciones), `/playlists` y `/playlists/[id]` (solo públicas).
 
 Auth: `POST /api/auth/login|logout`, `GET /api/auth/me`.
 
@@ -109,7 +109,6 @@ Pendiente / problemas conocidos:
 - El menú lateral tapa el contenido en pantallas chicas.
 - Sin tests automáticos ni CI; las verificaciones se hicieron con scripts temporales y a mano.
 - `GET /api/songs` y las páginas no paginan y traen las letras completas; está bien con ~40 canciones, habrá que paginar si crece.
-- El buscador del header no hace nada todavía.
 - Las páginas de `/home` hacen streaming (`loading.tsx`): un `notFound()`/`redirect()` responde 200 con la UI correcta y `noindex`, no 404/307.
 - La canción 20 (de Unidad) viene sin título desde los mocks.
 
@@ -117,6 +116,7 @@ Pendiente / problemas conocidos:
 
 - Probar cambios de API con `npm run dev` y la base de Neon real; si creás datos de prueba, borralos al terminar.
 - Antes de dar algo por hecho: `npm run typecheck` y `npm run lint` (y `next build` si tocás rutas o configuración).
+- Buscador del header (`components/Inputs/Search.tsx`): `next/form` hacia `/home/songs?q=`, que filtra en el servidor con `getSongs({ q })`. El filtro de texto se aplica en JS (por las tildes); si el catálogo crece, pasarlo a SQL con `unaccent`.
 - Datos en páginas: leer en el Server Component con `src/lib/data` (nunca `fetch` a la propia API) y pasar props a los componentes cliente. Después de escribir desde el cliente, `router.refresh()` para que se vuelvan a leer.
 - Módulos con base de datos, secretos o cookies llevan `import "server-only"`. Los scripts de `prisma/` no pueden importarlos.
 - Zustand con selectores (`usePlayerStore((s) => s.x)`), nunca desestructurando el store entero.
