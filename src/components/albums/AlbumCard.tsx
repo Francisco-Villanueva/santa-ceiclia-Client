@@ -1,51 +1,35 @@
-"use client";
-import { PlaylistPlay } from "@/common";
-import { playlistStore, songStore } from "@/store";
-import { PlayListType } from "@/types";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
+import Link from "next/link";
+import { PlaylistPlay } from "@/common/buttons/PlaylistPlay";
+import { PlayListType } from "@/types";
 
-export function AlbumCard({ playlist }: { playlist: PlayListType }) {
-  const { playlistPlaying } = playlistStore();
-  const { isPlaying } = songStore();
-
-  const router = useRouter();
-
+/** `eager`: la primera tarjeta suele ser la imagen más grande visible al cargar (LCP). */
+export function AlbumCard({ playlist, eager }: { playlist: PlayListType; eager?: boolean }) {
   return (
-    <div
-      key={playlist.id}
-      className="flex flex-col items-start gap-2 hover:bg-accent rounded-lg cursor-pointer transition-all duration-200 p-4 max-md:p-2   w-[80%]"
-      onClick={() => router.push(`/home/playlist/${playlist.id}`)}
+    <Link
+      href={`/home/playlist/${playlist.id}`}
+      className="flex flex-col items-start gap-2 hover:bg-accent rounded-lg transition-all duration-200 p-4 max-md:p-2 w-[80%]"
     >
-      <div className="relative  w-full max-md:w-36 aspect-square ">
+      <div className="relative w-full max-md:w-36 aspect-square">
         <Image
           src={playlist.img}
-          alt={playlist.name}
+          alt=""
           fill
-          objectFit="cover"
-          className="rounded-lg"
+          loading={eager ? "eager" : undefined}
+          sizes="(max-width: 768px) 144px, 25vw"
+          className="rounded-lg object-cover"
         />
       </div>
-      <div className="flex flex-col items-start w-full   ">
-        <div className="flex  justify-between w-full  ">
-          <h2 className="font-semibold text-md inline-block ">
-            {playlist.name}
-          </h2>
-          <span
-            className={`  flex  font-semibold  items-center gap-1   ${
-              playlistPlaying?.name === playlist.name && isPlaying
-                ? "text-primary"
-                : ""
-            }`}
-          >
+      <div className="flex flex-col items-start w-full">
+        <div className="flex justify-between w-full">
+          <h2 className="font-semibold text-md inline-block">{playlist.name}</h2>
+          <span className="flex font-semibold items-center gap-1">
             {playlist.songs.length}
-
             {playlist.songs.length > 0 && <PlaylistPlay playlist={playlist} />}
           </span>
         </div>
         <span className="text-xs text-gray-500">{playlist.owner}</span>
       </div>
-    </div>
+    </Link>
   );
 }

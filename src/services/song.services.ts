@@ -1,5 +1,5 @@
 import { SongType } from "@/types";
-import { apiGet, apiSend } from "./http";
+import { apiSend } from "./http";
 
 export type SongInput = {
   title: string;
@@ -16,12 +16,6 @@ export type LyricsInput = {
 };
 
 export class SongService {
-  static getAllSongs() {
-    return apiGet<SongType[]>("/songs");
-  }
-  static getById(id: SongType["id"]) {
-    return apiGet<SongType>(`/songs/${id}`);
-  }
   static create(data: SongInput) {
     return apiSend<SongType>("POST", "/songs", data);
   }

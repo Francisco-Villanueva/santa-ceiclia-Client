@@ -10,33 +10,31 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { PlaylistIcon } from "@/icons";
-import { songStore } from "@/store";
-import { SongsList } from "@/components";
+import { usePlayerStore } from "@/store";
+import { SongsList } from "@/components/songs/SongsList";
 import { Reproductor } from "./Reproductor";
 
 export function QueueList() {
-  const { songsQueue } = songStore();
+  const queue = usePlayerStore((s) => s.queue);
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="flex gap-2">
-          <PlaylistIcon /> {songsQueue.length}
+        <Button variant="outline" className="flex gap-2" aria-label="Ver la cola">
+          <PlaylistIcon /> {queue.length}
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-4 w-full ">
+      <SheetContent className="flex flex-col gap-4 w-full">
         <SheetHeader>
           <SheetTitle>Your Queue</SheetTitle>
-          <SheetDescription>
-            Songs quantity: {songsQueue.length}
-          </SheetDescription>
+          <SheetDescription>Songs quantity: {queue.length}</SheetDescription>
         </SheetHeader>
         <div className="border w-full" />
 
         <div>
-          <SongsList songs={songsQueue} />
+          <SongsList songs={queue} />
         </div>
 
-        <div className=" w-full absolute bottom-0 left-0">
+        <div className="w-full absolute bottom-0 left-0">
           <Reproductor />
         </div>
       </SheetContent>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { transposeChord } from "@/lib/chords";
-import { useIsMaster } from "@/store";
+import { useIsMaster } from "@/components/auth/SessionProvider";
 import type { SongType } from "@/types";
 import { ChordSheet } from "./ChordSheet";
 

@@ -9,10 +9,11 @@ import { headAudio } from "@/lib/storage";
 export const dynamic = "force-dynamic";
 
 // Registra un audio: link de YOUTUBE, o un FILE ya subido con la URL de /audio/upload.
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   return respond(async () => {
+    const p = await params;
     await requireMaster(req);
-    const id = parseNumericId(params.id, "Canción");
+    const id = parseNumericId(p.id, "Canción");
     const data = await parseBody(req, audioSchema);
 
     if (!(await prisma.song.findUnique({ where: { id }, select: { id: true } }))) {

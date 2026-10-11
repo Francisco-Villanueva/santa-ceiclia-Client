@@ -1,34 +1,27 @@
-import { songStore } from "@/store";
-import React from "react";
-import ReactPlayer from "react-player";
+"use client";
 
-export default function SoundPlayer() {
-  const {
-    isPlaying,
-    songPlaying,
-    nextSong,
-    setTimePlayed,
-    time: { duration },
-  } = songStore();
+import dynamic from "next/dynamic";
+import { usePlayerStore } from "@/store";
+
+// react-player depende del navegador (window, <audio>, iframes de YouTube): se carga solo en el
+// cliente y fuera del bundle inicial.
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+
+export function SoundPlayer() {
+  const url = usePlayerStore((s) => s.songPlaying?.sound ?? undefined);
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
+  const next = usePlayerStore((s) => s.next);
+  const setProgress = usePlayerStore((s) => s.setProgress);
 
   return (
     <ReactPlayer
-      url={songPlaying?.sound ?? undefined}
-      onDuration={(duration) => setTimePlayed({ duration })}
-      onProgress={({ playedSeconds, loadedSeconds }) =>
-        duration
-          ? setTimePlayed({
-              played: loadedSeconds,
-              duration,
-              progress: (playedSeconds / duration) * 100,
-            })
-          : null
-      }
-      controls={false}
+      url={url}
       playing={isPlaying}
+      controls={false}
       width="0"
       height="0"
-      onEnded={nextSong}
+      onProgress={({ played }) => setProgress(played * 100)}
+      onEnded={next}
     />
   );
 }

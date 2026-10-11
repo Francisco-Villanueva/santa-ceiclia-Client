@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST() {
   return respond(async () => {
-    clearSession();
+    await clearSession();
     return new NextResponse(null, { status: 204 });
   });
 }

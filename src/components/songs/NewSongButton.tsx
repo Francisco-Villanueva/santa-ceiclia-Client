@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useIsMaster } from "@/store";
+import { useIsMaster } from "@/components/auth/SessionProvider";
 
 export function NewSongButton() {
   const isMaster = useIsMaster();

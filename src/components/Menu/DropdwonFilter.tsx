@@ -1,37 +1,37 @@
 "use client";
+
+import { RamaType } from "@/types";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Checkbox } from "../ui/checkbox";
 
-import { ramaStore, santacecliaStore } from "@/store";
-import { RamaType } from "@/types";
-import { Button } from "../ui/button";
+type Props = {
+  ramas: RamaType[];
+  selected: RamaType["id"][];
+  onToggle: (ramaId: RamaType["id"]) => void;
+};
 
-export function DropdownRamaFilter() {
-  const { ramas } = ramaStore();
-  const { handleSantasFilter, santasFilter } = santacecliaStore();
-  const handleToggle = (ramaId: RamaType["id"]) => {
-    handleSantasFilter(ramaId);
-  };
+export function DropdownRamaFilter({ ramas, selected, onToggle }: Props) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant={"outline"}>Filter</Button>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Filter</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={"start"}>
+      <DropdownMenuContent align="start">
         {ramas.map((rama) => (
-          <div
+          <DropdownMenuCheckboxItem
             key={rama.id}
-            className="flex items-center gap-2"
-            onClick={() => handleToggle(rama.id)}
+            checked={selected.includes(rama.id)}
+            onCheckedChange={() => onToggle(rama.id)}
+            // Deja el menú abierto para poder marcar varias ramas seguidas.
+            onSelect={(e) => e.preventDefault()}
           >
-            <Checkbox checked={santasFilter.includes(rama.id)} />
-            <label htmlFor={rama.id}>{rama.name}</label>
-          </div>
+            {rama.name}
+          </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>

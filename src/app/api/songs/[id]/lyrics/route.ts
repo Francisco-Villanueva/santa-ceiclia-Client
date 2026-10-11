@@ -9,7 +9,7 @@ import { detectChords } from "@/lib/lyrics";
 
 export const dynamic = "force-dynamic";
 
-type Ctx = { params: { id: string } };
+type Ctx = { params: Promise<{ id: string }> };
 
 async function assertSong(id: number) {
   if (!(await prisma.song.findUnique({ where: { id }, select: { id: true } }))) {
@@ -20,8 +20,9 @@ async function assertSong(id: number) {
 // Crea o reemplaza la letra de la canción.
 export async function PUT(req: Request, { params }: Ctx) {
   return respond(async () => {
+    const p = await params;
     await requireMaster(req);
-    const id = parseNumericId(params.id, "Canción");
+    const id = parseNumericId(p.id, "Canción");
     const data = await parseBody(req, lyricsSchema);
     await assertSong(id);
 
@@ -47,8 +48,9 @@ export async function PUT(req: Request, { params }: Ctx) {
 
 export async function DELETE(req: Request, { params }: Ctx) {
   return respond(async () => {
+    const p = await params;
     await requireMaster(req);
-    const id = parseNumericId(params.id, "Canción");
+    const id = parseNumericId(p.id, "Canción");
     await assertSong(id);
     await prisma.songLyrics.deleteMany({ where: { songId: id } });
     return new NextResponse(null, { status: 204 });

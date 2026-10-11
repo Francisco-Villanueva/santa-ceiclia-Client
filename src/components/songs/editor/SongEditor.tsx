@@ -1,17 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ChordSheet } from "@/components/lyrics/ChordSheet";
 import { convertChordsOverLyrics } from "@/lib/chords";
 import { detectChords } from "@/lib/lyrics";
-import { AuthorService } from "@/services/author.services";
-import { SantaCeciliaServices } from "@/services/santacecilia.services";
 import { SongService } from "@/services/song.services";
-import { ramaStore, santacecliaStore, songStore } from "@/store";
-import type { AuthorType, LyricsFormat, SongAudioType, SongType } from "@/types";
+import type {
+  AuthorType,
+  LyricsFormat,
+  RamaType,
+  SantaCeciliaType,
+  SongAudioType,
+  SongType,
+} from "@/types";
 import { AuthorPicker } from "./AuthorPicker";
 
 const inputClass = "p-2 rounded-lg border bg-background text-sm focus:outline-none w-full";
@@ -20,12 +24,16 @@ const labelClass = "flex flex-col gap-1 text-sm";
 const AUDIO_ACCEPT = "audio/mpeg,audio/mp4,audio/aac,audio/wav,audio/x-wav,audio/ogg,audio/webm";
 const AUDIO_MAX_BYTES = 50 * 1024 * 1024;
 
-export function SongEditor({ song }: { song?: SongType }) {
+type Props = {
+  song?: SongType;
+  authors: AuthorType[];
+  festivals: SantaCeciliaType[];
+  ramas: RamaType[];
+};
+
+export function SongEditor({ song, authors: initialAuthors, festivals, ramas }: Props) {
   const router = useRouter();
   const { toast } = useToast();
-  const { ramas } = ramaStore();
-  const { santacecilias, setSantacecilias } = santacecliaStore();
-  const { setSongs } = songStore();
 
   // Si la creación sale bien pero falla un paso posterior, los reintentos actualizan esta
   // canción en vez de crear otra.
@@ -47,16 +55,10 @@ export function SongEditor({ song }: { song?: SongType }) {
   const [urlDraft, setUrlDraft] = useState("");
   const [newFiles, setNewFiles] = useState<File[]>([]);
 
-  const [authors, setAuthors] = useState<AuthorType[]>([]);
+  const [authors, setAuthors] = useState(initialAuthors);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    AuthorService.getAll()
-      .then(setAuthors)
-      .catch(() => setError("No se pudieron cargar los autores"));
-  }, []);
 
   function insertChord() {
     const el = textareaRef.current;
@@ -156,9 +158,8 @@ export function SongEditor({ song }: { song?: SongType }) {
         setNewFiles((files) => files.filter((f) => f !== file));
       }
 
-      await refreshStores();
       toast({ description: `"${title.trim()}" guardada`, duration: 2000 });
-      router.push("/home/songs");
+      leave();
     } catch (e) {
       const detail = e instanceof Error ? e.message : "Error desconocido";
       setError(
@@ -177,30 +178,22 @@ export function SongEditor({ song }: { song?: SongType }) {
     setSaving(true);
     try {
       await SongService.remove(songId);
-      await refreshStores();
       toast({ description: `"${title}" eliminada`, duration: 2000 });
-      router.push("/home/songs");
+      leave();
     } catch (e) {
       setError(e instanceof Error ? e.message : "No se pudo eliminar");
       setSaving(false);
     }
   }
 
-  async function refreshStores() {
-    try {
-      const [songs, festivals] = await Promise.all([
-        SongService.getAllSongs(),
-        SantaCeciliaServices.getAll(),
-      ]);
-      setSongs(songs);
-      setSantacecilias(festivals);
-    } catch {
-      // Si falla el refresco, las listas se actualizan en la próxima carga.
-    }
+  // Las listas son Server Components: refresh vuelve a pedirlas con los cambios recién guardados.
+  function leave() {
+    router.push("/home/songs");
+    router.refresh();
   }
 
   const visibleAudios = audios.filter((a) => !removedAudioIds.includes(a.id));
-  const sortedFestivals = [...santacecilias].sort((a, b) => b.year - a.year);
+  const sortedFestivals = festivals.toSorted((a, b) => b.year - a.year);
 
   return (
     <div className="flex flex-col gap-6 select-text pb-8">

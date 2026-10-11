@@ -1,89 +1,45 @@
-import { SongType } from "@/types";
-import { songStore } from "@/store";
-import { SongListCard } from "@/common";
-import { useToast } from "../ui/use-toast";
+"use client";
 
-type RamaNames =
-  | "Alitas"
-  | "Manada"
-  | "Caravana"
-  | "Unidad"
-  | "Caminantes"
-  | "Solar"
-  | "Clan"
-  | "Rovers";
-interface SantaSongsListProps {
-  songs: SongType[];
-}
+import { SongListCard } from "@/common/songs/ListCard";
+import { RamaType, SongType } from "@/types";
+import { usePlaySong } from "./usePlaySong";
 
-function SongCard({
-  ramaName,
-  songs,
-}: {
-  ramaName: RamaNames;
-  songs: SongType[];
-}) {
-  const song = songs.filter((song) => song.author === ramaName)[0];
-  const { handlePlaySong, addToQueue, songPlaying, isPlaying } = songStore();
-  const { toast } = useToast();
+// En cada Santa Cecilia compiten las ramas de a pares, por área.
+const AREAS: { area: string; slugs: [string, string] }[] = [
+  { area: "Área 1", slugs: ["alitas", "manada"] },
+  { area: "Área 2", slugs: ["caravana", "unidad"] },
+  { area: "Área 3", slugs: ["solar", "caminantes"] },
+  { area: "Área 4", slugs: ["clan", "rovers"] },
+];
 
-  const handleSelectSong = (song: SongType) => {
-    if (song.id === songPlaying?.id) return;
-    if (!song.sound) {
-      return toast({
-        title: `${song.title}\n  doesn't have soundtrack`,
-        duration: 3000,
-        variant: "destructive",
-        description: `Author: ${song.author}`,
-      });
-    }
-    handlePlaySong(song);
-    addToQueue(song);
-    if (!isPlaying || song.id !== songPlaying?.id) {
-    }
-    toast({
-      title: `Listening: ${song.title}`,
-      duration: 3000,
-      description: `Author: ${song.author}`,
-    });
+type Props = { songs: SongType[]; ramas: RamaType[] };
+
+export function SantaSongsList({ songs, ramas }: Props) {
+  const playSong = usePlaySong();
+  // Se busca por rama (branchId) y no por el nombre del autor, que puede variar.
+  const songOf = (slug: string) => {
+    const rama = ramas.find((r) => r.slug === slug);
+    return rama ? songs.find((s) => s.branchId === rama.id) : undefined;
   };
 
   return (
-    <div className="flex items-center gap-2 transition-all duration-300 hover:bg-muted px-2 rounded-md">
-      {song && <SongListCard handleSelectSong={handleSelectSong} song={song} />}
-    </div>
-  );
-}
-export function SantaSongsList({ songs }: SantaSongsListProps) {
-  const arr: { area: string; ramas: RamaNames[] }[] = [
-    {
-      area: "Área 1",
-      ramas: ["Alitas", "Manada"],
-    },
-    {
-      area: "Área 2",
-      ramas: ["Caravana", "Unidad"],
-    },
-    {
-      area: "Área 3",
-      ramas: ["Solar", "Caminantes"],
-    },
-    {
-      area: "Área 4",
-      ramas: ["Clan", "Rovers"],
-    },
-  ];
-  return (
     <div className="flex flex-col gap-6 h-full">
-      {arr.map((santa, i) => (
-        <section className="flex flex-col gap-1 " key={santa.area + i}>
-          <h2 className="text-xl font-semibold text-accent-foreground">
-            {santa.area}
-          </h2>
+      {AREAS.map(({ area, slugs }) => (
+        <section className="flex flex-col gap-1" key={area}>
+          <h2 className="text-xl font-semibold text-accent-foreground">{area}</h2>
           <hr />
           <div>
-            <SongCard ramaName={santa.ramas[0]} songs={songs} />
-            <SongCard ramaName={santa.ramas[1]} songs={songs} />
+            {slugs.map((slug) => {
+              const song = songOf(slug);
+              return song ? (
+                <div
+                  key={slug}
+                  className="flex items-center gap-2 transition-all duration-300 hover:bg-muted px-2 rounded-md"
+                >
+                  <SongListCard handleSelectSong={playSong} song={song} />
+                </div>
+              ) : null;
+            })}
           </div>
         </section>
       ))}

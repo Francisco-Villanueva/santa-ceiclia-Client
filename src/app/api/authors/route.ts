@@ -5,6 +5,7 @@ import { parseBody, respond } from "@/lib/api/http";
 import { assertAuthorShape, assertRefs } from "@/lib/api/refs";
 import { authorCreateSchema } from "@/lib/api/schemas";
 import { requireMaster } from "@/lib/auth/guard";
+import { getAuthors } from "@/lib/data/catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -23,10 +24,5 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  return respond(async () => {
-    const rows = await prisma.author.findMany({
-      orderBy: [{ type: "asc" }, { name: "asc" }],
-    });
-    return NextResponse.json(rows.map(toAuthor));
-  });
+  return respond(async () => NextResponse.json(await getAuthors()));
 }

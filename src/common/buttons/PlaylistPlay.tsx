@@ -1,7 +1,7 @@
 "use client";
 
 import { PauseIcon, PlayIcon } from "@/icons";
-import { playlistStore, songStore } from "@/store";
+import { usePlayerStore } from "@/store";
 import { PlayListType } from "@/types";
 
 interface PlaylistPlayProps {
@@ -9,23 +9,22 @@ interface PlaylistPlayProps {
   buttonSize?: number;
 }
 export function PlaylistPlay({ playlist, buttonSize = 6 }: PlaylistPlayProps) {
-  const { playlistPlaying, setPlaylistsPlaying } = playlistStore();
-  const { isPlaying, handlePlaySong, addToQueue } = songStore();
-  const handlePlaylist = (playlist: PlayListType) => {
-    setPlaylistsPlaying(playlist);
-    playlist.songs.forEach((song, index) => {
-      if (index === 0) handlePlaySong(song);
-      addToQueue(song);
-    });
-  };
+  const playPlaylist = usePlayerStore((s) => s.playPlaylist);
+  const playing = usePlayerStore((s) => s.isPlaying && s.playlistPlayingId === playlist.id);
 
   return (
-    <button onClick={() => handlePlaylist(playlist)} className="text-primary">
-      {playlistPlaying?.name === playlist.name && isPlaying ? (
-        <PauseIcon size={buttonSize} />
-      ) : (
-        <PlayIcon size={buttonSize} />
-      )}
+    <button
+      type="button"
+      aria-label={playing ? `Pausar ${playlist.name}` : `Reproducir ${playlist.name}`}
+      onClick={(e) => {
+        // La tarjeta de la playlist es un link: el botón no debe navegar.
+        e.preventDefault();
+        e.stopPropagation();
+        playPlaylist(playlist);
+      }}
+      className="text-primary"
+    >
+      {playing ? <PauseIcon size={buttonSize} /> : <PlayIcon size={buttonSize} />}
     </button>
   );
 }

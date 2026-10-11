@@ -5,6 +5,7 @@ import { parseBody, respond } from "@/lib/api/http";
 import { assertRefs } from "@/lib/api/refs";
 import { festivalCreateSchema } from "@/lib/api/schemas";
 import { requireMaster } from "@/lib/auth/guard";
+import { getFestivals } from "@/lib/data/catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -27,11 +28,5 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  return respond(async () => {
-    const rows = await prisma.festival.findMany({
-      include: festivalInclude,
-      orderBy: { year: "desc" },
-    });
-    return NextResponse.json(rows.map(toFestival));
-  });
+  return respond(async () => NextResponse.json(await getFestivals()));
 }
