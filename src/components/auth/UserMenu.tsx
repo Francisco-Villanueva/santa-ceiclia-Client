@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { authStore } from "@/store";
+import { useCurrentUser, useLogout } from "./SessionProvider";
 
 export function UserMenu() {
-  const { user, status, logout } = authStore();
-  if (status === "loading") return null;
+  const user = useCurrentUser();
+  const logout = useLogout();
 
   return user ? (
     <div className="flex items-center gap-2 text-sm">

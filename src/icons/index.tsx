@@ -29,7 +29,7 @@ export function ShortArrow({
       strokeWidth={1.5}
       stroke="currentColor"
       className={`w-6 transition-all duration-200 ${
-        direction === "right" ? "rotate-180" : "rotat-360"
+        direction === "right" ? "rotate-180" : ""
       }`}
     >
       <path
@@ -120,7 +120,8 @@ export function PlayIcon({ size = 6 }: { size?: number }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`h-${size}`}
+      style={{ height: `${size / 4}rem` }}
+      aria-hidden
     >
       <path
         strokeLinecap="round"
@@ -135,24 +136,6 @@ export function PlayIcon({ size = 6 }: { size?: number }) {
     </svg>
   );
 }
-export function MusicIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-3"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z"
-      />
-    </svg>
-  );
-}
 export function PauseIcon({ size = 6 }: { size?: number }) {
   return (
     <svg
@@ -161,7 +144,8 @@ export function PauseIcon({ size = 6 }: { size?: number }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`h-${size}  `}
+      style={{ height: `${size / 4}rem` }}
+      aria-hidden
     >
       <path
         strokeLinecap="round"
@@ -185,24 +169,6 @@ export function HomeIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-      />
-    </svg>
-  );
-}
-export function LyricsIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="w-5"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
       />
     </svg>
   );

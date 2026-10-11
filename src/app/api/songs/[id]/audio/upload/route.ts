@@ -9,10 +9,11 @@ export const dynamic = "force-dynamic";
 
 // Paso 1: devuelve una URL prefirmada. El cliente hace PUT del archivo y luego
 // registra el audio con POST /api/songs/[id]/audio ({ kind: "FILE", storageKey }).
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   return respond(async () => {
+    const p = await params;
     await requireMaster(req);
-    const id = parseNumericId(params.id, "Canción");
+    const id = parseNumericId(p.id, "Canción");
     const { mimeType, sizeBytes } = await parseBody(req, audioUploadSchema);
 
     if (!(await prisma.song.findUnique({ where: { id }, select: { id: true } }))) {

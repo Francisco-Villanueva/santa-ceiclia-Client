@@ -1,6 +1,8 @@
 import { HomeLandingPage } from "@/components";
-import React from "react";
+import { getPublicPlaylists } from "@/lib/data/catalog";
+import { getSongs } from "@/lib/data/songs";
 
-export default function page() {
-  return <HomeLandingPage />;
+export default async function HomePage() {
+  const [songs, playlists] = await Promise.all([getSongs(), getPublicPlaylists()]);
+  return <HomeLandingPage songs={songs} playlists={playlists} />;
 }

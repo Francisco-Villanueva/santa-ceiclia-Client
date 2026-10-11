@@ -1,69 +1,25 @@
-"use client";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { LoginForm } from "@/components/auth/LoginForm";
+import { getCurrentUser } from "@/lib/auth/guard";
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+export const metadata: Metadata = { title: "Iniciar sesión" };
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+type Props = { searchParams: Promise<{ next?: string | string[] }> };
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    const form = new FormData(e.currentTarget);
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: form.get("email"),
-        password: form.get("password"),
-      }),
-    });
-    setLoading(false);
-    if (!res.ok) {
-      const body = await res.json().catch(() => null);
-      setError(body?.error ?? "No se pudo iniciar sesión");
-      return;
-    }
-    router.push("/home");
-    router.refresh();
-  }
+/** Solo rutas internas: evita usar el login para redirigir a otro sitio (open redirect). */
+function safeNext(next: string | string[] | undefined) {
+  // "//otro.com" y "/\otro.com" los navegadores los interpretan como URLs de otro host.
+  return typeof next === "string" && /^\/(?![/\\])/.test(next) ? next : "/home";
+}
+
+export default async function LoginPage({ searchParams }: Props) {
+  const next = safeNext((await searchParams).next);
+  if (await getCurrentUser()) redirect(next);
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-sm flex flex-col gap-4 border rounded-xl p-6"
-      >
-        <h1 className="text-xl font-bold">Iniciar sesión</h1>
-        <label className="flex flex-col gap-1 text-sm">
-          Email
-          <input
-            name="email"
-            type="email"
-            required
-            autoComplete="username"
-            className="p-2 rounded-lg border bg-background focus:outline-none"
-          />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Contraseña
-          <input
-            name="password"
-            type="password"
-            required
-            autoComplete="current-password"
-            className="p-2 rounded-lg border bg-background focus:outline-none"
-          />
-        </label>
-        {error && <p className="text-sm text-red-500">{error}</p>}
-        <Button type="submit" disabled={loading}>
-          {loading ? "Entrando..." : "Entrar"}
-        </Button>
-      </form>
+      <LoginForm next={next} />
     </main>
   );
 }

@@ -1,29 +1,20 @@
 "use client";
-import { songStore } from "@/store";
-import React from "react";
+
+import { usePlayerStore } from "@/store";
 
 export default function PlayBounce() {
-  const { isPlaying } = songStore();
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
   return (
-    <div className="mx-1 flex ">
-      <span
-        className={`${isPlaying && "animate-bounce"}  `}
-        style={{ animationDelay: "0s" }}
-      >
-        .
-      </span>
-      <span
-        className={`${isPlaying && "animate-bounce"}`}
-        style={{ animationDelay: ".1s" }}
-      >
-        .
-      </span>
-      <span
-        className={`${isPlaying && "animate-bounce"}`}
-        style={{ animationDelay: ".2s" }}
-      >
-        .
-      </span>
+    <div className="mx-1 flex" aria-hidden>
+      {["0s", ".1s", ".2s"].map((delay) => (
+        <span
+          key={delay}
+          className={isPlaying ? "animate-bounce" : undefined}
+          style={{ animationDelay: delay }}
+        >
+          .
+        </span>
+      ))}
     </div>
   );
 }

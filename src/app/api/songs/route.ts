@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { songInclude, toSong } from "@/lib/api/dto";
 import { parseBody, respond } from "@/lib/api/http";
 import { assertRefs } from "@/lib/api/refs";
 import { songCreateSchema } from "@/lib/api/schemas";
 import { requireMaster } from "@/lib/auth/guard";
+import { getSongs } from "@/lib/data/songs";
 
 export const dynamic = "force-dynamic";
 
@@ -46,34 +46,7 @@ const querySchema = z.object({
 
 export async function GET(req: NextRequest) {
   return respond(async () => {
-    const p = querySchema.parse(Object.fromEntries(req.nextUrl.searchParams));
-
-    const where: Prisma.SongWhereInput = {
-      ...(p.q && {
-        OR: [
-          { title: { contains: p.q, mode: "insensitive" } },
-          { author: { name: { contains: p.q, mode: "insensitive" } } },
-        ],
-      }),
-      ...(p.branch && { author: { branch: { slug: p.branch } } }),
-      ...(p.author && { authorId: p.author }),
-      ...(p.year && { year: p.year }),
-      ...(p.festival && { festivalId: p.festival }),
-      ...(p.hasChords !== undefined
-        ? { lyrics: { is: { hasChords: p.hasChords } } }
-        : p.hasLyrics !== undefined && {
-            lyrics: p.hasLyrics ? { isNot: null } : { is: null },
-          }),
-      ...(p.hasAudio !== undefined && {
-        audios: p.hasAudio ? { some: {} } : { none: {} },
-      }),
-    };
-
-    const rows = await prisma.song.findMany({
-      where,
-      include: songInclude,
-      orderBy: { id: "desc" },
-    });
-    return NextResponse.json(rows.map(toSong));
+    const filters = querySchema.parse(Object.fromEntries(req.nextUrl.searchParams));
+    return NextResponse.json(await getSongs(filters));
   });
 }

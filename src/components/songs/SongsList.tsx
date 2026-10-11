@@ -1,79 +1,35 @@
 "use client";
-import { songStore } from "@/store";
+
+import { SongListCard } from "@/common/songs/ListCard";
 import { SongType } from "@/types";
-import { useToast } from "../ui/use-toast";
-import { Skeleton } from "../ui/skeleton";
-import { SongListCard } from "@/common";
+import { usePlaySong } from "./usePlaySong";
 
-export function SongsList({
-  songs,
-  type = "play",
-}: {
-  songs?: SongType[];
+type Props = {
+  songs: SongType[];
+  /** "play" reproduce al tocar; "read" llama a onSelect (ej. para mostrar la letra). */
   type?: "read" | "play";
-}) {
-  const {
-    songPlaying,
-    addToQueue,
-    songs: ALLSONGS,
-    handlePlaySong,
-    isPlaying,
-    setSelectedSong,
-  } = songStore();
-  const { toast } = useToast();
+  onSelect?: (song: SongType) => void;
+};
 
-  const handleSelectSong = (song: SongType) => {
-    if (type === "read") {
-      return setSelectedSong(song);
-    } else {
-      if (song.id === songPlaying?.id) return;
-      if (!song.sound) {
-        return toast({
-          title: `${song.title}\n  doesn't have soundtrack`,
-          duration: 3000,
-          variant: "destructive",
-          description: `Author: ${song.author}`,
-        });
-      }
-      handlePlaySong(song);
-      addToQueue(song);
-      if (!isPlaying || song.id !== songPlaying?.id) {
-      }
-      toast({
-        title: `Listening: ${song.title}`,
-        duration: 3000,
-        description: `Author: ${song.author}`,
-      });
-    }
-  };
+export function SongsList({ songs, type = "play", onSelect }: Props) {
+  const playSong = usePlaySong();
+  const handleSelect = type === "read" && onSelect ? onSelect : playSong;
 
-  const songsToShow = songs ? songs : ALLSONGS;
+  if (!songs.length) {
+    return <p className="text-sm text-gray-500 p-2">No hay canciones para mostrar.</p>;
+  }
+
   return (
-    <div className="flex flex-col   max-h-full h-full overflow-y-auto">
-      {songsToShow ? (
-        songsToShow.map((song, index) => (
-          <SongListCard
-            index={index}
-            key={song.id}
-            song={song}
-            handleSelectSong={handleSelectSong}
-            type={type}
-          />
-        ))
-      ) : (
-        <div className="flex flex-col gap-4">
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-          <Skeleton className=" p-2 rounded-xl w-full h-10" />
-        </div>
-      )}
+    <div className="flex flex-col max-h-full h-full overflow-y-auto">
+      {songs.map((song, index) => (
+        <SongListCard
+          index={index}
+          key={song.id}
+          song={song}
+          handleSelectSong={handleSelect}
+          type={type}
+        />
+      ))}
     </div>
   );
 }
