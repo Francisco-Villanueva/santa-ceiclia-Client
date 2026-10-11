@@ -15,7 +15,7 @@ Idioma del proyecto: español (UI, mensajes de error de la API, comentarios). Ma
 
 ## Stack
 
-Next.js 14.1 (App Router) · React 18 · TypeScript · Tailwind + shadcn/Radix (`src/components/ui`) · Zustand · Prisma 7 + PostgreSQL en **Neon** · zod 4 · `jose` + `bcryptjs` (sesión propia, sin Auth.js) · Neon Object Storage (S3 compatible, `@aws-sdk/client-s3`) · `react-player` para reproducir.
+Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind + shadcn/Radix (`src/components/ui`) · Zustand 5 · Prisma 7 + PostgreSQL en **Neon** · zod 4 · `jose` + `bcryptjs` (sesión propia, sin Auth.js) · Neon Object Storage (S3 compatible, `@aws-sdk/client-s3`) · `react-player` para reproducir.
 
 Deploy en Vercel (Node **24.x**; Node 20 ya no se soporta). Local: Node 22.
 
@@ -23,8 +23,9 @@ Deploy en Vercel (Node **24.x**; Node 20 ya no se soporta). Local: Node 22.
 
 ```bash
 npm run dev                  # http://localhost:4000
-npm run build / start / lint
-npx tsc --noEmit             # chequeo de tipos (no hay tests automáticos)
+npm run build / start
+npm run lint                 # ESLint 9 (flat config, eslint.config.mjs); `next lint` ya no existe
+npm run typecheck            # tsc --noEmit (no hay tests automáticos)
 npm run db:migrate           # prisma migrate dev (usa DIRECT_URL)
 npm run db:seed              # importa src/mocks/*.json (carga inicial)
 npm run db:studio
@@ -52,17 +53,19 @@ prisma/schema.prisma      esquema; seed.ts; convert-lyrics.ts
 prisma.config.ts          config de Prisma 7 (URL del CLI, ruta del seed)
 neon.ts                   definición del bucket de Neon Storage
 src/app/api/              Route Handlers (ver abajo)
-src/app/home/             UI: songs, lyrics, santacecilias, playlist; Provider carga stores
-src/app/login/            página de login
+src/app/home/             páginas (Server Components): leen de src/lib/data y pasan DTOs a componentes cliente;
+                          loading.tsx / error.tsx / not-found.tsx
+src/app/login/            página de login (acepta ?next=/ruta interna)
+src/lib/data/             capa de acceso a datos (server-only): songs.ts, catalog.ts; las usan páginas y API
 src/lib/prisma.ts         singleton PrismaClient (adapter-pg)
 src/lib/api/              dto.ts (mappers fila→DTO), http.ts, schemas.ts (zod), refs.ts
-src/lib/auth/             session.ts (JWT/cookie), guard.ts (requireMaster), rateLimit.ts
+src/lib/auth/             session.ts (JWT/cookie), guard.ts (getCurrentUser cacheado, requireMaster), rateLimit.ts
 src/lib/chords/           chord.ts, chordpro.ts, convert.ts
 src/lib/lyrics.ts         detectChords(content, format)
 src/lib/storage.ts        S3: presign, head, delete
-src/services/             clientes fetch de la API (http.ts: apiGet/apiSend/ApiError)
-src/store/                Zustand: songs, playlists, ramas, santacecilias, auth
-src/components/           UI; lyrics/ (ChordSheet, LyricsViewer), songs/editor/, auth/
+src/services/             clientes fetch de la API para escrituras (http.ts: apiSend/ApiError)
+src/store/                Zustand, solo estado del navegador: player.store (reproductor, cola), ui.store (menú)
+src/components/           UI; lyrics/, songs/editor/, santacecilias/, auth/ (SessionProvider: useCurrentUser/useIsMaster)
 src/mocks/                JSON originales; solo los usa el seed
 ```
 
@@ -76,7 +79,7 @@ Auth: `POST /api/auth/login|logout`, `GET /api/auth/me`.
 
 Escritura (solo MASTER): `POST /songs`, `PATCH|DELETE /songs/[id]`, `PUT|DELETE /songs/[id]/lyrics`, `POST /songs/[id]/audio` (`YOUTUBE` con `url`, `FILE` con `storageKey`), `POST /songs/[id]/audio/upload` (URL prefirmada), `DELETE /songs/[id]/audio/[audioId]`, `POST /authors`, `PATCH|DELETE /authors/[id]`, `POST /festivals`, `PATCH|DELETE /festivals/[id]`.
 
-Convenciones de los handlers: `export const dynamic = "force-dynamic"`; envolver en `respond()` (traduce `HttpError`, `ZodError` y errores Prisma P2002→409, P2003→409, P2025→404); validar body con `parseBody(req, schema)`; devolver DTOs vía `src/lib/api/dto.ts`, nunca filas de Prisma. Para recursos referenciados usar `assertRefs` (400 claro en vez de error de FK). Todo endpoint de escritura llama `requireMaster(req)` primero.
+Convenciones de los handlers: `params` es una Promise (`{ params: Promise<{ id: string }> }`, Next 16); `export const dynamic = "force-dynamic"`; envolver en `respond()` (traduce `HttpError`, `ZodError` y errores Prisma P2002→409, P2003→409, P2025→404); validar body con `parseBody(req, schema)`; devolver DTOs vía `src/lib/api/dto.ts`, nunca filas de Prisma. Las lecturas van en `src/lib/data/` para que páginas y API compartan la misma consulta. Para recursos referenciados usar `assertRefs` (400 claro en vez de error de FK). Todo endpoint de escritura llama `requireMaster(req)` primero.
 
 ## Autenticación
 
@@ -101,17 +104,21 @@ Cookie `sc_session` (httpOnly, SameSite=Lax, 7 días) con un JWT que solo guarda
 Hecho: esquema + seed, API de lectura y escritura, login, acordes (parser, conversor, transposición, visor), editor de canciones para masters con vista previa, subida de audio a Neon Storage.
 
 Pendiente / problemas conocidos:
-- Playlists de la comunidad persistidas (crear/editar con usuarios `MEMBER`); hoy la UI de playlists es de solo lectura y el store las modifica solo en memoria.
+- Playlists de la comunidad persistidas (crear/editar con usuarios `MEMBER`); hoy la UI de playlists es de solo lectura.
 - Alta de usuarios (registro de members, creación de masters).
-- Error de hidratación en consola en todas las páginas de `/home` (anterior a este trabajo, sin resolver).
 - El menú lateral tapa el contenido en pantallas chicas.
 - Sin tests automáticos ni CI; las verificaciones se hicieron con scripts temporales y a mano.
-- `GET /api/songs` no pagina y trae las letras completas; está bien con ~40 canciones, habrá que paginar si crece.
+- `GET /api/songs` y las páginas no paginan y traen las letras completas; está bien con ~40 canciones, habrá que paginar si crece.
+- El buscador del header no hace nada todavía.
+- Las páginas de `/home` hacen streaming (`loading.tsx`): un `notFound()`/`redirect()` responde 200 con la UI correcta y `noindex`, no 404/307.
 - La canción 20 (de Unidad) viene sin título desde los mocks.
 
 ## Cómo trabajar acá
 
 - Probar cambios de API con `npm run dev` y la base de Neon real; si creás datos de prueba, borralos al terminar.
-- Antes de dar algo por hecho: `npx tsc --noEmit` (y `next build` si tocás rutas o configuración).
+- Antes de dar algo por hecho: `npm run typecheck` y `npm run lint` (y `next build` si tocás rutas o configuración).
+- Datos en páginas: leer en el Server Component con `src/lib/data` (nunca `fetch` a la propia API) y pasar props a los componentes cliente. Después de escribir desde el cliente, `router.refresh()` para que se vuelvan a leer.
+- Módulos con base de datos, secretos o cookies llevan `import "server-only"`. Los scripts de `prisma/` no pueden importarlos.
+- Zustand con selectores (`usePlayerStore((s) => s.x)`), nunca desestructurando el store entero.
 - Cambios de esquema: editar `prisma/schema.prisma` y correr `npm run db:migrate`; no resetear la base de Neon sin avisar (tiene datos reales).
 - Al agregar un endpoint de escritura: `requireMaster`, `parseBody` con schema en `schemas.ts`, `respond`, DTO en `dto.ts`, y método en el servicio del cliente.
